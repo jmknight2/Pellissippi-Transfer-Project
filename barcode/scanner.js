@@ -10,9 +10,15 @@ document.body.innerHTML+='<input id="ScannerJS" type="file" accept="image/*" sty
 //This activates bgGo(), and expects the output variable to be an "input" tag.
 //Why have this function? It allows an image request in virtually any scenario, not just when the user clicks on an input tag.
 function scan(output){
-    var newFile=document.getElementById("ScannerJS");
-    newFile.onchange=function(){bgGo(output);};
-    newFile.click();
+    if(output == undefined)
+         console.error("scan(): Please specifiy the insert tag you wish to output the barcode to.");
+    else{
+        var newFile=document.getElementById("ScannerJS");
+        newFile.onchange=function(){bgGo(output);};
+        console.log("test");
+        newFile.click();
+    }
+    console.log(typeof output);
 }
 
 //launches the scanner, and if successful, places the result inside "value" attribute of inputTag.
