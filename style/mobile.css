@@ -1,0 +1,84 @@
+td
+{
+    font-size: 14px;
+}
+
+.barcode
+{
+    font-size: 20px;
+    text-decoration: none;
+    color: black;
+}
+
+.barcode:hover
+{
+    cursor: pointer;
+}
+
+.mobile
+{
+    display: none;
+}
+
+.navbar
+{
+    background-color: #0066cc;
+}
+
+.navbar-header
+{
+    height: 100px;
+}
+
+.panel
+{
+    margin-top: 15px;
+}
+
+.panel-heading:hover
+{
+    cursor: pointer;
+}
+
+.panel-title
+{
+    font-size: 14px;
+}
+
+#add-item
+{
+    font-size: 17px;
+    color: black;
+    width: 50px;
+    height: 50px;
+    background-color: 	#5bc0de;
+    border-radius: 100px;
+    border: 2px solid black;
+    position: fixed;
+    margin-bottom: 15px;
+    bottom: 0;
+    margin-right: 15px;
+    right: 0;
+    z-index: 100
+}
+
+#add-item:active
+{
+    background-color: #29a329;
+}
+
+@media only screen and (max-device-width : 768px)
+{
+    .mobile
+    {
+        display: inherit;
+        margin-top: 230px;
+    }
+
+    .navbar-nav > li
+    {
+        margin-top: 10px;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+}
