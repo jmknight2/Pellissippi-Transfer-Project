@@ -1,6 +1,6 @@
 /*
  * Desginer(s): Jon Knight
- * Date Last Edited: 2/2/2017
+ * Date Last Edited: 2/2/2018
  * Dependencies: Stylesheet for "mobile.HTML/PHP".
  */
 
@@ -20,11 +20,6 @@ td
 {
     background-color: #0066cc;
     margin-bottom: 0px;
-}
-
-.navbar-header
-{
-    height: 100px;
 }
 
 .panel
