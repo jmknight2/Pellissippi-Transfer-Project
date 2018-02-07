@@ -1,3 +1,8 @@
+<!-- Designer(s): Jon Knight
+  -- Date last modified: 2/2/2018 (Zachary Mitchell - minor edit)
+  -- Dependices: Stylesheet = "mobile.css"
+  -->
+
 <html lang="en">
     <head>
         <title>UI Demo 4</title>
@@ -23,7 +28,7 @@
     </head>
     <body>
         
-        <nav class="navbar navbar-default navbar-fixed-top">
+        <nav class="navbar navbar-default">
           <div class="container-fluid">
             <div class="navbar-header centered">
               <a class="navbar-brand" style="height: 100px;" href="#"><img style="height: 100%;" src="img_assets/pellissippilogo.png"/></a>
@@ -41,197 +46,52 @@
           </div>
         </nav>
         
-        <div class="mobile container-fluid">
+        <div class="container-fluid mobile">
             
-            <button id="add-item" data-toggle="modal" data-target="#Add_Modal1"><span class="glyphicon glyphicon-plus"></span></button>
+            <button id="add-item" data-toggle="modal" data-target="#Add_Modal"><span class="glyphicon glyphicon-plus"></span></button>
                 
-            <div class="panel panel-primary" data-toggle="collapse" href="#collapse2">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a><b>ID#</b> 1005 | Dell Inspiron 9100</a>
-                  <span class="glyphicon glyphicon-chevron-down pull-right"></span>
-                </h4>
-              </div>
-              <div id="collapse2" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <table class="table table-condensed">
-                        <tr><td><b>Model </b></td><td>Dell Inspiron 9100</td></tr>
-                        <tr><td><b>From (Room) </b></td><td>MC149A</td></tr>
-                        <tr><td><b>Previous Owner </b></td><td>Jon Knight</td></tr>
-                        <tr><td><b>Dept. From </b></td><td>CITC</td></tr>
-                        <tr><td><b>To (Room) </b></td><td>MC253</td></tr>
-                        <tr><td><b>New Owner </b></td><td>Jon Knight</td></tr>
-                        <tr><td><b>Dept. To </b></td><td>CITC</td></tr>
-                    </table>
-
-                    <p><b>Notes: </b>This is only a test transfer.</p>
-                    <button class="btn btn-danger delete-btn">Remove</button>
-                    <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#Edit_Modal1">Edit</button>
-                </div>
-              </div>
-            </div>
+            <!-- The commented snippet below is the template for a single record. This is the markup necessary for every new record.
+              -- There are 2 things that must be different in each panel for them to work: the ID of the panel-collapse, and the
+              -- href attribute of the panel itself. 
+              -- ** Make sure that the href is identical to the panel-collpse ID **
+              --
+              -->
             
-            <div class="panel panel-primary" data-toggle="collapse" href="#collapse3">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" href="#collapse3"><b>ID#</b> 1006 | Dell Inspiron 9100</a>
-                  <span class="glyphicon glyphicon-chevron-down pull-right"></span>
-                </h4>
-              </div>
-              <div id="collapse3" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <table class="table table-condensed">
-                        <tr><td><b>Model </b></td><td>Dell Inspiron 9100</td></tr>
-                        <tr><td><b>From (Room) </b></td><td>MC149A</td></tr>
-                        <tr><td><b>Previous Owner </b></td><td>Jon Knight</td></tr>
-                        <tr><td><b>Dept. From </b></td><td>CITC</td></tr>
-                        <tr><td><b>To (Room) </b></td><td>MC253</td></tr>
-                        <tr><td><b>New Owner </b></td><td>Jon Knight</td></tr>
-                        <tr><td><b>Dept. To </b></td><td>CITC</td></tr>
-                    </table>
-
-                    <p><b>Notes: </b>This is only a test transfer.</p>
-                    <button class="btn btn-danger delete-btn">Remove</button>
-                    <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#Edit_Modal1">Edit</button>
-                </div>
-              </div>
-            </div>
+            <!--
+              -- <div class="panel panel-primary" data-toggle="collapse" href="#collapse2">
+              -- <div class="panel-heading">
+              --    <h4 class="panel-title">
+              --       <a><b>ID#</b> 1005 | Dell Inspiron 9100</a>
+              --       <span class="glyphicon glyphicon-chevron-down pull-right"></span>
+              --     </h4>
+              -- </div>
+              -- <div id="collapse2" class="panel-collapse collapse">
+              --     <div class="panel-body">
+              --         <table class="table table-condensed">
+              --             <tr><td><b>Model </b></td><td>Dell Inspiron 9100</td></tr>
+              --             <tr><td><b>From (Room) </b></td><td>MC149A</td></tr>
+              --             <tr><td><b>Previous Owner </b></td><td>Jon Knight</td></tr>
+              --             <tr><td><b>Dept. From </b></td><td>CITC</td></tr>
+              --             <tr><td><b>To (Room) </b></td><td>MC253</td></tr>
+              --             <tr><td><b>New Owner </b></td><td>Jon Knight</td></tr>
+              --             <tr><td><b>Dept. To </b></td><td>CITC</td></tr>
+              --         </table>
+              -- 
+              --         <p><b>Notes: </b>This is only a test transfer.</p>
+              --         <button class="btn btn-danger delete-btn">Remove</button>
+              --         <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#Edit_Modal1">Edit</button>
+              --     </div>
+              -- </div>
+              -- </div>
+              -->
             
-            <div class="panel panel-primary" data-toggle="collapse" href="#collapse4">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a><b>ID#</b> 1007 | Dell Inspiron 9100</a>
-                  <span class="glyphicon glyphicon-chevron-down pull-right"></span>
-                </h4>
-              </div>
-              <div id="collapse4" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <table class="table table-condensed">
-                        <tr><td><b>Model </b></td><td>Dell Inspiron 9100</td></tr>
-                        <tr><td><b>From (Room) </b></td><td>MC149A</td></tr>
-                        <tr><td><b>Previous Owner </b></td><td>Jon Knight</td></tr>
-                        <tr><td><b>Dept. From </b></td><td>CITC</td></tr>
-                        <tr><td><b>To (Room) </b></td><td>MC253</td></tr>
-                        <tr><td><b>New Owner </b></td><td>Jon Knight</td></tr>
-                        <tr><td><b>Dept. To </b></td><td>CITC</td></tr>
-                    </table>
-
-                    <p><b>Notes: </b>This is only a test transfer.</p>
-                    <button class="btn btn-danger delete-btn">Remove</button>
-                    <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#Edit_Modal1">Edit</button>
-                </div>
-              </div>
-            </div>
-            
-            <div class="panel panel-primary" data-toggle="collapse" href="#collapse5">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a><b>ID#</b> 1008 | Dell Inspiron 9100</a>
-                  <span class="glyphicon glyphicon-chevron-down pull-right"></span>
-                </h4>
-              </div>
-              <div id="collapse5" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <table class="table table-condensed">
-                        <tr><td><b>Model </b></td><td>Dell Inspiron 9100</td></tr>
-                        <tr><td><b>From (Room) </b></td><td>MC149A</td></tr>
-                        <tr><td><b>Previous Owner </b></td><td>Jon Knight</td></tr>
-                        <tr><td><b>Dept. From </b></td><td>CITC</td></tr>
-                        <tr><td><b>To (Room) </b></td><td>MC253</td></tr>
-                        <tr><td><b>New Owner </b></td><td>Jon Knight</td></tr>
-                        <tr><td><b>Dept. To </b></td><td>CITC</td></tr>
-                    </table>
-
-                    <p><b>Notes: </b>This is only a test transfer.</p>
-                    <button class="btn btn-danger delete-btn">Remove</button>
-                    <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#Edit_Modal1">Edit</button>
-                </div>
-              </div>
-            </div>
-            
-            <div class="panel panel-primary" data-toggle="collapse" href="#collapse6">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a><b>ID#</b> 1009 | Dell Inspiron 9100</a>
-                  <span class="glyphicon glyphicon-chevron-down pull-right"></span>
-                </h4>
-              </div>
-              <div id="collapse6" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <table class="table table-condensed">
-                        <tr><td><b>Model </b></td><td>Dell Inspiron 9100</td></tr>
-                        <tr><td><b>From (Room) </b></td><td>MC149A</td></tr>
-                        <tr><td><b>Previous Owner </b></td><td>Jon Knight</td></tr>
-                        <tr><td><b>Dept. From </b></td><td>CITC</td></tr>
-                        <tr><td><b>To (Room) </b></td><td>MC253</td></tr>
-                        <tr><td><b>New Owner </b></td><td>Jon Knight</td></tr>
-                        <tr><td><b>Dept. To </b></td><td>CITC</td></tr>
-                    </table>
-
-                    <p><b>Notes: </b>This is only a test transfer.</p>
-                    <button class="btn btn-danger delete-btn">Remove</button>
-                    <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#Edit_Modal1">Edit</button>
-                </div>
-              </div>
-            </div>
-            
-            <div class="panel panel-primary" data-toggle="collapse" href="#collapse7">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a><b>ID#</b> 1010 | Dell Inspiron 9100</a>
-                  <span class="glyphicon glyphicon-chevron-down pull-right"></span>
-                </h4>
-              </div>
-              <div id="collapse7" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <table class="table table-condensed">
-                        <tr><td><b>Model </b></td><td>Dell Inspiron 9100</td></tr>
-                        <tr><td><b>From (Room) </b></td><td>MC149A</td></tr>
-                        <tr><td><b>Previous Owner </b></td><td>Jon Knight</td></tr>
-                        <tr><td><b>Dept. From </b></td><td>CITC</td></tr>
-                        <tr><td><b>To (Room) </b></td><td>MC253</td></tr>
-                        <tr><td><b>New Owner </b></td><td>Jon Knight</td></tr>
-                        <tr><td><b>Dept. To </b></td><td>CITC</td></tr>
-                    </table>
-
-                    <p><b>Notes: </b>This is only a test transfer.</p>
-                    <button class="btn btn-danger delete-btn">Remove</button>
-                    <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#Edit_Modal1">Edit</button>
-                </div>
-              </div>
-            </div>
-            <div class="panel panel-primary" data-toggle="collapse" href="#collapse8">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a><b>ID#</b> 1011 | Dell Inspiron 9100</a>
-                  <span class="glyphicon glyphicon-chevron-down pull-right"></span>
-                </h4>
-              </div>
-              <div id="collapse8" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <table class="table table-condensed">
-                        <tr><td><b>Model </b></td><td>Dell Inspiron 9100</td></tr>
-                        <tr><td><b>From (Room) </b></td><td>MC149A</td></tr>
-                        <tr><td><b>Previous Owner </b></td><td>Jon Knight</td></tr>
-                        <tr><td><b>Dept. From </b></td><td>CITC</td></tr>
-                        <tr><td><b>To (Room) </b></td><td>MC253</td></tr>
-                        <tr><td><b>New Owner </b></td><td>Jon Knight</td></tr>
-                        <tr><td><b>Dept. To </b></td><td>CITC</td></tr>
-                    </table>
-
-                    <p><b>Notes: </b>This is only a test transfer.</p>
-                    <button class="btn btn-danger delete-btn">Remove</button>
-                    <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#Edit_Modal1">Edit</button>
-                </div>
-              </div>
-            </div>
         </div>
         
-        <!-- Modal -->
+        <!-- Edit Modal start -->
         <div id="Edit_Modal1" class="modal fade" role="dialog">
           <div class="modal-dialog">
 
-            <!-- Modal content-->
+            <!-- Edit Modal content start-->
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -242,8 +102,8 @@
                 <div class="form-group" style="text-align: left; margin: 0 auto;">
                     <h4>PSCC ID#</h4>
                     <div class="input-group">
-                        <input class="form-control" name="model" placeholder="Please enter/scan ID" value="1004">
-                        <span class="barcode input-group-addon"><span class="glyphicon glyphicon-barcode"></span></span>
+                        <input class="form-control" name="ID" id="IDAdd" placeholder="Please enter/scan ID" value="">
+                        <span class="barcode input-group-addon" onclick="scan(IDAdd)"><span class="glyphicon glyphicon-barcode"></span></span>
                     </div>
                 </div>
                 
@@ -304,6 +164,8 @@
               </form>
                 
               </div>
+              <!-- Edit Modal content end -->    
+                
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-success" data-dismiss="modal">Save Changes</button>
@@ -312,13 +174,13 @@
 
           </div>
         </div>
-        <!-- Modal End -->
+        <!-- Edit Modal end -->
         
-        <!-- Modal -->
-        <div id="Add_Modal1" class="modal fade" role="dialog">
+        <!-- Add Modal start -->
+        <div id="Add_Modal" class="modal fade" role="dialog">
           <div class="modal-dialog">
 
-            <!-- Modal content-->
+            <!-- Add Modal content start -->
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -329,8 +191,8 @@
                 <div class="form-group" style="text-align: left; margin: 0 auto;">
                     <h4>PSCC ID#</h4>
                     <div class="input-group">
-                        <input class="form-control" name="model" placeholder="Please enter/scan ID">
-                        <span class="barcode input-group-addon"><span class="glyphicon glyphicon-barcode"></span></span>
+                        <input class="form-control" name="ID" id="IDEdit" placeholder="Please enter/scan ID" value="">
+                        <span class="barcode input-group-addon" onclick="scan(IDEdit)"><span class="glyphicon glyphicon-barcode"></span></span>
                     </div>
                 </div>
                 
@@ -394,6 +256,8 @@
               </form>
                 
               </div>
+              <!-- Add Modal content end -->  
+                  
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-success" data-dismiss="modal">Save Changes</button>
@@ -402,6 +266,9 @@
 
           </div>
         </div>
+        <!-- Add Modal end -->
         
+        <script src="barcode/quagga/dist/quagga.min.js"></script>
+        <script src="barcode/scanner.js"></script>
     </body>
 </html>

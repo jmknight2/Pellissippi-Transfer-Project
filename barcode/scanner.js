@@ -15,10 +15,8 @@ function scan(output){
     else{
         var newFile=document.getElementById("ScannerJS");
         newFile.onchange=function(){bgGo(output);};
-        console.log("test");
         newFile.click();
     }
-    console.log(typeof output);
 }
 
 //launches the scanner, and if successful, places the result inside "value" attribute of inputTag.

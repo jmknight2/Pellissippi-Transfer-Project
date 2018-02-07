@@ -1,3 +1,9 @@
+/*
+ * Desginer(s): Jon Knight
+ * Date Last Edited: 2/2/2018
+ * Dependencies: Stylesheet for "mobile.HTML/PHP".
+ */
+
 td
 {
     font-size: 14px;
@@ -10,24 +16,10 @@ td
     color: black;
 }
 
-.barcode:hover
-{
-    cursor: pointer;
-}
-
-.mobile
-{
-    display: none;
-}
-
 .navbar
 {
     background-color: #0066cc;
-}
-
-.navbar-header
-{
-    height: 100px;
+    margin-bottom: 0px;
 }
 
 .panel
@@ -51,7 +43,7 @@ td
     color: black;
     width: 50px;
     height: 50px;
-    background-color: 	#5bc0de;
+    background-color: #0066cc;
     border-radius: 100px;
     border: 2px solid black;
     position: fixed;
@@ -64,21 +56,20 @@ td
 
 #add-item:active
 {
-    background-color: #29a329;
+    background-color: #004d99;
 }
 
-@media only screen and (max-device-width : 768px)
+.mobile
 {
-    .mobile
-    {
-        display: inherit;
-        margin-top: 230px;
-    }
+    height: 59%;
+    display: inherit;
+    overflow-y: scroll;
+    margin: 0px;
+}
 
-    .navbar-nav > li
-    {
-        margin-top: 10px;
-        margin-right: 10px;
-        margin-left: 10px;
-    }
+.navbar-nav > li
+{
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
 }
