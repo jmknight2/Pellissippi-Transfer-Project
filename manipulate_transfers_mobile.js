@@ -42,7 +42,7 @@ function refreshList()
 
                            <p><b>Notes: </b>` + notes + `</p>
                            <button class="btn btn-danger delete-btn" onclick="deleteTransfer(this)">Remove</button>
-                           <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#Edit_Modal1">Edit</button>
+                           <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#Edit_Modal1" onclick="setSelectedID(this)">Edit</button>
                        </div>
                    </div>
                    </div>`;
@@ -68,7 +68,54 @@ function clearAll()
 
 function setSelectedID(button)
 {
-    selectedTransferID = 
+    selectedTransferID = parseInt($(button).closest('.panel-collapse').attr('id'));
+    
+    $('#IDEdit').val(transfersArray[selectedTransferID].itemID);
+    //transfersArray[selectedTransferID].newRoom = $('#newRoomEdit').val();
+    //transfersArray[selectedTransferID].newOwner = $('#newOwnerEdit').val();
+    //transfersArray[selectedTransferID].newDept = $('#newDeptEdit').val();
+    $('#notesEdit').val(transfersArray[selectedTransferID].notes);
+    $('#modelEdit').val(transfersArray[selectedTransferID].model);
+    $('#preRoomEdit').val(transfersArray[selectedTransferID].preRoom);
+    $('#preOwnerEdit').val(transfersArray[selectedTransferID].preOwner);
+    $('#preDeptEdit').val(transfersArray[selectedTransferID].preDept);
+}
+
+function submitEdit()
+{
+    if($('#IDEdit').val() != '')
+    {
+        //Add an additional check here to make sure the ID is valid
+        //Do this by making sure the fields populated by the database aren't empty.
+        
+        if($('#newRoomEdit').val() != null &&
+           $('#newOwnerEdit').val() != null &&
+           $('#newDeptEdit').val() != null)
+        {            
+            
+            
+            
+            transfersArray[selectedTransferID].itemID = $('#IDEdit').val();
+            transfersArray[selectedTransferID].newRoom = $('#newRoomEdit').val();
+            transfersArray[selectedTransferID].newOwner = $('#newOwnerEdit').val();
+            transfersArray[selectedTransferID].newDept = $('#newDeptEdit').val();
+            transfersArray[selectedTransferID].notes = $('#notesEdit').val();
+            transfersArray[selectedTransferID].model = $('#modelEdit').val();
+            transfersArray[selectedTransferID].preRoom = $('#preRoomEdit').val();
+            transfersArray[selectedTransferID].preOwner = $('#preOwnerEdit').val();
+            transfersArray[selectedTransferID].preDept = $('#preDeptEdit').val();
+            
+            refreshList();
+        }
+        else
+        {
+            alert("Please ensure you've comppleted all required fields.");
+        }
+    }
+    else
+    {
+        alert('Please enter an ID');
+    }
 }
 
 function submitNew()
