@@ -1,0 +1,118 @@
+// Written by: Jon Knight
+// Date last modified: 2/12/18
+// Dependencies: mobile.html
+
+var transfersArray = [];
+var selectedTransferID;
+
+function refreshList()
+{
+    $('.mobile .panel').remove();
+    
+    transfersArray.forEach(function(element, index){
+                var itemID = element.itemID;
+                var newRoom = element.newRoom;
+                var newOwner = element.newOwner;
+                var newDept = element.newDept;
+                var notes = element.notes;
+                var model = element.model;
+                var preRoom = element.preRoom;
+                var preOwner = element.preOwner;
+                var preDept = element.preDept;
+        
+                var html = 
+                `<div class="panel panel-primary" data-toggle="collapse" href="#` + index + `">
+                   <div class="panel-heading">
+                      <h4 class="panel-title">
+                         <a><b>ID#</b> ` + itemID + ` | ` + model + `</a>
+                         <span class="glyphicon glyphicon-chevron-down pull-right"></span>
+                       </h4>
+                   </div>
+                   <div id="` + index + `" class="panel-collapse collapse">
+                       <div class="panel-body">
+                           <table class="table table-condensed">
+                               <tr><td><b>Model </b></td><td>` + model + `</td></tr>
+                               <tr><td><b>Previous Room </b></td><td>` + preRoom + `</td></tr>
+                               <tr><td><b>Previous Owner </b></td><td>` + preOwner + `</td></tr>
+                               <tr><td><b>Previous Dept. </b></td><td>` + preDept + `</td></tr>
+                               <tr><td><b>New Room </b></td><td>` + newRoom + `</td></tr>
+                              <tr><td><b>New Owner </b></td><td>` + newOwner + `</td></tr>
+                               <tr><td><b>Dept. To </b></td><td>` + newDept + `</td></tr>
+                           </table>
+
+                           <p><b>Notes: </b>` + notes + `</p>
+                           <button class="btn btn-danger delete-btn" onclick="deleteTransfer(this)">Remove</button>
+                           <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#Edit_Modal1">Edit</button>
+                       </div>
+                   </div>
+                   </div>`;
+        
+                var newElement = $.parseHTML(html);
+        
+                $('.mobile').append(newElement);
+            });
+}
+
+function deleteTransfer(button)
+{
+    var index = $(button).closest('.panel-collapse').attr('id');
+    transfersArray.splice(index, 1);
+    $(button).closest('.panel').remove();
+}
+
+function clearAll()
+{
+    transfersArray = [];
+    $('.mobile .panel').remove();
+}
+
+function setSelectedID(button)
+{
+    selectedTransferID = 
+}
+
+function submitNew()
+{
+    if($('#IDAdd').val() != '')
+    {
+        //Add an additional check here to make sure the ID is valid
+        //Do this by making sure the fields populated by the database aren't empty.
+        
+        if($('#newRoom').val() != null &&
+           $('#newOwner').val() != null &&
+           $('#newDept').val() != null)
+        {
+            var transfer = {
+                itemID:$('#IDAdd').val(),
+                newRoom:$('#newRoom').val(),
+                newOwner:$('#newOwner').val(),
+                newDept:$('#newDept').val(),
+                notes:$('#notes').val(),
+                model:$('#model').val(),
+                preRoom:$('#pre_room').val(),
+                preOwner:$('#pre_owner').val(),
+                preDept:$('#pre_dept').val()
+            };
+            
+            
+            $('#IDAdd').val('');
+            $('#notes').val('');
+            $('#model').val('');
+            $('#pre_room').val('');
+            $('#pre_owner').val('');
+            $('#pre_dept').val('');
+            
+            transfersArray.push(transfer);
+            
+            refreshList();
+        }
+        else
+        {
+            alert("Please ensure you've comppleted all required fields.");
+        }
+    }
+    else
+    {
+        alert('Please enter an ID');
+    }
+}
