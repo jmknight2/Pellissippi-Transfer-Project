@@ -3,7 +3,10 @@
  * Date Last Edited: 2/2/2018
  * Dependencies: Stylesheet for "mobile.HTML/PHP".
  */
-
+body {
+  background-size: cover;
+  background-color: rgba(0, 0, 0, .5);
+}
 td
 {
     font-size: 14px;
@@ -18,7 +21,6 @@ td
 
 .navbar
 {
-    background-color: #0066cc;
     margin-bottom: 0px;
 }
 
