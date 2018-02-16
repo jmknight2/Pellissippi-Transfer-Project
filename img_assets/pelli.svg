@@ -58,12 +58,14 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-926.86221)" />
+     transform="translate(0,-926.86221)"
+     style="fill-opacity:0.5;"/>
   <g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Layer 2"
-     transform="translate(0,-274.5)">
+     transform="translate(0,-274.5)"
+     style="fill-opacity: 0.5">
     <g
        id="g4578"
        transform="matrix(0.99401383,0,0,0.99529787,0.25283722,274.75113)">
@@ -79,26 +81,26 @@
            transform="translate(81.847814,-5.3013954)"
            id="g4202">
           <path
-             style="fill:#ffd24f;fill-opacity:.5;fill-rule:evenodd;stroke:#004b8d;stroke-width:1.50906491;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             style="fill:#ffd24f;fill-rule:evenodd;stroke:#004b8d;stroke-width:1.50906491;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
              d="m -81.076602,280.30362 68.717477,0 0.01118,93.42051 -34.803533,30.90623 -34.195192,-30.71217 z"
              id="path4201"
              inkscape:connector-curvature="0"
              sodipodi:nodetypes="cccccc" />
           <rect
-             style="fill:#004b8d;fill-opacity:.5;stroke:none;stroke-width:0.75994122;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             style="fill:#004b8d;stroke:none;stroke-width:0.75994122;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
              id="rect859"
              width="68.446152"
              height="5.0328045"
              x="-80.960922"
              y="289.28964" />
           <path
-             style="fill:#004b8d;fill-opacity:.5;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             style="fill:#004b8d;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
              d="m -12.509594,290.42846 0,83.53521 -34.643293,30.37906 0,-113.93526 c 0,0 34.687508,0.021 34.608672,0.021 z"
              id="path861"
              inkscape:connector-curvature="0"
              sodipodi:nodetypes="ccccsc" />
           <rect
-             style="opacity:1;fill:#ffd24f;fill-opacity:.5;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             style="opacity:1;fill:#ffd24f;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
              id="rect4151"
              width="29"
              height="7.5"
@@ -111,9 +113,9 @@
                inkscape:connector-curvature="0"
                id="path4196"
                d="m -40.182508,294.26995 0,103.82482 -6.97041,6.21529 -0.002,-110.04011 z"
-               style="fill:#ffd24f;fill-opacity:.5;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+               style="fill:#ffd24f;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
             <path
-               style="fill:#004b8d;fill-opacity:.5;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+               style="fill:#004b8d;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
                d="m -54.128834,294.18394 0,103.86297 6.97784,6.26315 0,-110.12612 z"
                id="path4198"
                inkscape:connector-curvature="0"
@@ -125,7 +127,7 @@
              height="7.516573"
              width="30.272562"
              id="rect4200"
-             style="opacity:1;fill:#004b8d;fill-opacity:.5;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+             style="opacity:1;fill:#004b8d;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         </g>
       </g>
     </g>
