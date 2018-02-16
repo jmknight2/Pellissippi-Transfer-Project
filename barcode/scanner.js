@@ -5,7 +5,7 @@
 
 //First things first. We generate the file input tag, which is "clicked" when scan() is run.
 //This is done so that we can implement the scanner as easy as possible, with little to no setup:
-document.body.innerHTML+='<input id="ScannerJS" type="file" accept="image/*" style="visibility:hidden"/>';
+document.body.innerHTML+='<input id="ScannerJS" type="file" accept="image/*" style="display:none"/>';
 
 //This activates bgGo(), and expects the output variable to be an "input" tag.
 //Why have this function? It allows an image request in virtually any scenario, not just when the user clicks on an input tag.

@@ -16,9 +16,9 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
     </head>
-    <body background="img_assets/pelli.svg">
+    <body>
 
-        <nav class="navbar">
+        <nav class="navbar navbar-default">
           <div class="container-fluid">
             <ul class="nav navbar-nav">
                 <li>
@@ -34,6 +34,7 @@
         </nav>
 
         <div class="container-fluid mobile">
+          <div id="items">
             <button id="add-item" data-toggle="modal" data-target="#Add_Modal"><span class="glyphicon glyphicon-plus"></span></button>
 
             <!-- The commented snippet below is the template for a single record. This is the markup necessary for every new record.
@@ -70,7 +71,7 @@
                </div>
                </div>
               -->
-
+          </div>
         </div>
 
         <!-- Edit Modal start -->
