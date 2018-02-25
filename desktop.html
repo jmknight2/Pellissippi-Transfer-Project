@@ -1,11 +1,19 @@
-<!-- Designer(s): Jon Knight
-  -- Date last modified: 2/2/2018
+<!-- Designer(s): Jon Knight, Mathew Ratliff
+  -- Date last modified: 2/25/2018
+  -- Last Modified By: Mathew Ratliff
+  ---------------------------------------
+  -- Reason for modification (2/25/18) --
+  ---------------------------------------
+  -- Working on desktop design updates and functionality.
+  -- Changed pelli logo to the pelli_full.svg logo. Edited slightly to add
+  -- a drop-shadow to make it stand-out on desktop a little better.
+  --(((((((((((()))))))))))))--
   -- Dependices: Stylesheet = "desktop.css"
   -->
 
 <html lang="en">
     <head>
-        <title>UI Demo 4</title>
+        <title>Pellissippi Transfer Utilty</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -15,7 +23,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
-        
+
         <script>
             $(document).ready(function() {
                 $('.delete-btn').click(function(event) {
@@ -24,32 +32,33 @@
                 });
             });
         </script>
-        
+
     </head>
     <body>
-        
+
         <nav class="navbar navbar-default navbar-fixed-top">
           <div class="container-fluid">
             <div class="navbar-header">
-              <a class="navbar-brand" style="height: 100px;" href="#"><img class="thumbnail" style="height: 100%;" src="img_assets/pellissippilogo.png"/></a>
+              <a class="navbar-brand" style="height: 100px;"><img style="height: 100%;" src="img_assets/pelli_full.svg"/></a>
             </div>
             <ul class="nav navbar-nav">
                 <li>
                     <select class="form-control">
+                      <!-- possibly make this auto-filled with database stuff -->
                         <option>jmknight2@pstcc.edu</option>
                         <option>lbates@pstcc.edu</option>
                     </select>
                 </li>
-                
-                <li><button data-toggle="modal" data-target="#Add_Modal" class="btn btn-block" style="color: white; background-color: #FCD955" >Add Item</button></li>
+
+                <li><button id="add_btn" data-toggle="modal" data-target="#Add_Modal" class="btn btn-block" style="color: white; background-color: #FCD955" >Add Item</button></li>
                 <li class="active"><button class="btn btn-success btn-block" style="">Submit Transfer</button></li>
                 <li><button class="btn btn-danger btn-block" style="">Clear Items</button></li>
             </ul>
           </div>
         </nav>
-        
+
         <div class="content-main container-fluid">
-                
+
             <table class="table table-condensed table-striped">
                 <thead>
                     <th>PSCC ID</th>
@@ -64,12 +73,12 @@
                     <th></th>
                 </thead>
                 <tbody class="content-area">
-                
-                    
+                  <!-- implement javascript here to pull stuff from add-modal and edit-modal -->
+
                     <!--
                       -- The following commented <tr> is template layout for every row in the table. Every row sholud be laid out this way.
                       -->
-                    
+
                     <!--
                     <tr>
                         <td>
@@ -109,13 +118,13 @@
                         <td><button class="btn btn-danger btn-sm delete-btn"><span class="glyphicon glyphicon-trash"></span></button></td>
                     </tr>
                     -->
-                    
-                    
+
+
                 </tbody>
-            </table>    
+            </table>
         </div>
-        
-        
+
+
         <!-- Add Modal start -->
         <div id="Add_Modal" class="modal fade" role="dialog">
           <div class="modal-dialog">
@@ -138,6 +147,7 @@
                         <h4>New Room</h4>
                         <select class="form-control selectpicker" id="newRoom" data-show-subtext="true" data-live-search="true">
                             <option disabled selected value="none">Please choose room...</option>
+                            <!-- autofill this from database w/ php-->
                             <option>MC235</option>
                             <option>MC236</option>
                             <option>MC237</option>
@@ -147,13 +157,14 @@
                         </select>
                     </div>
                 </div>
-                
-                  
-                <div class="col-sm-6">  
+
+
+                <div class="col-sm-6">
                     <div class="form-group" style="text-align: left; margin: 0 auto;">
                         <h4>New Owner</h4>
                         <select class="form-control selectpicker" id="newOwner" data-show-subtext="true" data-live-search="true">
                             <option disabled selected value="none">Please choose owner...</option>
+                            <!-- autofill this from database w/ php-->
                             <option>Jon Knight</option>
                             <option>Jacob Simms</option>
                             <option>Zachary Mitchell</option>
@@ -165,22 +176,24 @@
                         <h4>New Department</h4>
                         <select class="form-control selectpicker" id="newDept" data-show-subtext="true" data-live-search="true">
                             <option disabled selected value="none">Please choose dept. ...</option>
+                            <!-- autofill this from database w/ php-->
                             <option>CITC</option>
                             <option>BUSN</option>
                             <option>CHEM</option>
                         </select>
                     </div>
                 </div>
-                
-                <div class="col-sm-12">  
+
+                <div class="col-sm-12">
                     <div class="form-group">
                         <h4>Notes</h4>
                         <textarea class="form-control" name="notes" id="notes">
 
-                        </textarea> 
-                    </div>   
-                </div>    
-                    
+                        </textarea>
+                    </div>
+                </div>
+
+                <!-- autofill this with id# if exists in database -->
                 <div class="col-sm-6">
                     <div class="form-group" style="text-align: left; margin: 0 auto;">
                         <h4>Model</h4>
@@ -191,8 +204,8 @@
                         <input class="form-control" name="pre_room" value=" " readonly>
                     </div>
                 </div>
-                  
-                <div class="col-sm-6">  
+
+                <div class="col-sm-6">
                     <div class="form-group" style="text-align: left; margin: 0 auto;">
                         <h4>Previous Owner</h4>
                         <input class="form-control" name="pre_owner" value=" " readonly>
@@ -202,10 +215,10 @@
                         <input class="form-control" name="pre_dept" value=" " readonly>
                     </div>
                 </div>
-                
+
               </div>
-              <!-- Add Modal content end -->  
-                  
+              <!-- Add Modal content end -->
+
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-success" onclick="submitNew();">Save Changes</button>
@@ -215,7 +228,7 @@
           </div>
         </div>
         <!-- Add Modal end -->
-        
+
         <!-- Edit Modal start -->
         <div id="Edit_Modal" class="modal fade" role="dialog">
           <div class="modal-dialog">
@@ -247,9 +260,9 @@
                         </select>
                     </div>
                 </div>
-                
-                  
-                <div class="col-sm-6">  
+
+
+                <div class="col-sm-6">
                     <div class="form-group" style="text-align: left; margin: 0 auto;">
                         <h4>New Owner</h4>
                         <select class="form-control selectpicker" id="newOwner" data-show-subtext="true" data-live-search="true">
@@ -271,16 +284,16 @@
                         </select>
                     </div>
                 </div>
-                
-                <div class="col-sm-12">  
+
+                <div class="col-sm-12">
                     <div class="form-group">
                         <h4>Notes</h4>
                         <textarea class="form-control" name="notes" id="notes">
 
-                        </textarea> 
-                    </div>   
-                </div>    
-                    
+                        </textarea>
+                    </div>
+                </div>
+
                 <div class="col-sm-6">
                     <div class="form-group" style="text-align: left; margin: 0 auto;">
                         <h4>Model</h4>
@@ -291,8 +304,8 @@
                         <input class="form-control" name="pre_room" value=" " readonly>
                     </div>
                 </div>
-                  
-                <div class="col-sm-6">  
+
+                <div class="col-sm-6">
                     <div class="form-group" style="text-align: left; margin: 0 auto;">
                         <h4>Previous Owner</h4>
                         <input class="form-control" name="pre_owner" value=" " readonly>
@@ -302,10 +315,10 @@
                         <input class="form-control" name="pre_dept" value=" " readonly>
                     </div>
                 </div>
-                
+
               </div>
-              <!-- Edit Modal content end -->  
-                  
+              <!-- Edit Modal content end -->
+
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-success" onclick="submitNew();">Save Changes</button>
@@ -315,8 +328,8 @@
           </div>
         </div>
         <!-- Edit Modal end -->
-        
+
     </body>
-    
+
     <script src="manipulate_transfers_desktop.js"></script>
 </html>
