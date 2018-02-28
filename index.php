@@ -20,7 +20,7 @@
         {
             if($_POST["pwd"] == $pwd)
             {
-                
+                $_SESSION['auth'] = true;
             }
         }
     
@@ -36,34 +36,40 @@
   </form> 
   
   <?php
-    if()
-  <script>
-      var isMobile = {
-      Android: function() {
-          return navigator.userAgent.match(/Android/i);
-        },
-      BlackBerry: function() {
-          return navigator.userAgent.match(/BlackBerry/i);
-        },
-      iOS: function() {
-          return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-        },
-      Opera: function() {
-          return navigator.userAgent.match(/Opera Mini/i);
-        },
-      Windows: function() {
-          return navigator.userAgent.match(/IEMobile/i) || navigator.userAgent.match(/WPDesktop/i);
-        },
-      any: function() {
-          return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
-        }
-      };
-        if (isMobile.any()) {
-          document.location.replace('mobile.html');
-        }
-        else {
-          document.location.replace('desktop.html');
-        }
-  </script>
+    if($_SESSION['auth'])
+    {
+$script = <<<EOT
+<script>
+var isMobile = {
+Android: function() {
+  return navigator.userAgent.match(/Android/i);
+},
+BlackBerry: function() {
+  return navigator.userAgent.match(/BlackBerry/i);
+},
+iOS: function() {
+  return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+},
+Opera: function() {
+  return navigator.userAgent.match(/Opera Mini/i);
+},
+Windows: function() {
+  return navigator.userAgent.match(/IEMobile/i) || navigator.userAgent.match(/WPDesktop/i);
+},
+any: function() {
+  return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+}
+};
+if (isMobile.any()) {
+  document.location.replace('mobile.html');
+}
+else {
+  document.location.replace('desktop.html');
+}
+</script>
 </body>
 </html>
+EOT;
+        echo $script;
+    }
+  ?>
