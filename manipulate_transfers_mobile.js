@@ -163,3 +163,45 @@ function submitNew()
         alert('Please enter an ID');
     }
 }
+
+function getInfoFromTag(str) 
+{
+	
+	//window.alert(str.length);
+	
+	if (str.length < 6) 
+	{
+		document.getElementById("notes").value = "Tag not found.";
+		document.getElementById("model").value = "";
+		document.getElementById("pre_room").value = "";
+		document.getElementById("pre_owner").value = "";
+		document.getElementById("pre_dept").value = "";
+		return;
+	} 
+	
+	else 
+	{
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function()
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				var results = this.responseText.trim();
+				
+				if(results !== "error")
+				{
+					var resultsArr = results.split(",");
+					console.log(resultsArr);
+					
+					document.getElementById("model").value = resultsArr[0];
+					document.getElementById("pre_room").value = resultsArr[1];
+					document.getElementById("pre_owner").value = resultsArr[2];
+					document.getElementById("pre_dept").value = "Not available";
+					document.getElementById("notes").value = "";
+				}
+			}
+		};
+		xmlhttp.open("GET", "phpFunctions.php?q=" + str, true);
+		xmlhttp.send();
+	}
+}
