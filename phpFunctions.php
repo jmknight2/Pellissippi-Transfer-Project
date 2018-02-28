@@ -3,7 +3,7 @@
 function connectToDB()
 {
 	//make odbc connection to MSaccess DB
-	$con = odbc_connect("ProjDB", "", "");
+	$con = odbc_connect("PPDB", "", "");
 
 	if(!($con))
 	{
