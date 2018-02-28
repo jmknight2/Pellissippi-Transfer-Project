@@ -1,32 +1,41 @@
 /*
- * Desginer(s): Jon Knight
- * Date Last Edited: 2/2/2018
+ * Designer(s): Jon Knight, Mathew Ratliff
+ * Date Last Edited: 2/25/2018
+ ****
+ * Reason for modification
+ * Added a drop shadow to button, then added a drop shadow (mainly to easily tell what
+ * row you're on) when hovering over a row.
+ ****
  * Dependencies: Stylesheet for "desktop.HTML/PHP".
  */
 
+tr:hover >td {
+  filter: drop-shadow(3px 3px 5px rgba(0,0,0,.35));
+}
+
 td
 {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .form-control
 {
-    min-width: 0px;
+  min-width: 0px;
 }
 
 .content-main
 {
-    margin-top: 80px;
+  margin-top: 80px;
 }
 
 .navbar
 {
-    background-color: #0066cc;
+  background-color: #0066cc;
 }
 
 .navbar-nav > li
 {
-    margin-top: 30px;
-    margin-right: 10px;
-    margin-left: 10px;
+  margin-top: 30px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
