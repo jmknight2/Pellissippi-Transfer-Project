@@ -51,6 +51,12 @@ function deleteTransfer(button)
     $(button).closest('tr').remove();
 }
 
+function submitFinal()
+{
+    var myJsonString = JSON.stringify(transfersArray);
+    console.log(myJsonString);
+}
+
 function submitNew()
 {
     if($('#IDAdd').val() != '')

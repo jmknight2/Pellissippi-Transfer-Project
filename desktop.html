@@ -16,15 +16,6 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
         
-        <script>
-            $(document).ready(function() {
-                $('.delete-btn').click(function(event) {
-                  event.preventDefault();
-                  $(this).closest('tr').remove();
-                });
-            });
-        </script>
-        
     </head>
     <body>
         
@@ -42,7 +33,7 @@
                 </li>
                 
                 <li><button data-toggle="modal" data-target="#Add_Modal" class="btn btn-block" style="color: white; background-color: #FCD955" >Add Item</button></li>
-                <li class="active"><button class="btn btn-success btn-block" style="">Submit Transfer</button></li>
+                <li class="active"><button class="btn btn-success btn-block" onclick="submitFinal()">Submit Transfer</button></li>
                 <li><button class="btn btn-danger btn-block" style="">Clear Items</button></li>
             </ul>
           </div>
@@ -288,18 +279,18 @@
                     </div>
                     <div class="form-group" style="text-align: left; margin: 0 auto;">
                         <h4>Previous Room</h4>
-                        <input class="form-control" name="pre_room" value=" " readonly>
+                        <input class="form-control" name="pre_room" id="pre_room" value=" " readonly>
                     </div>
                 </div>
                   
                 <div class="col-sm-6">  
                     <div class="form-group" style="text-align: left; margin: 0 auto;">
                         <h4>Previous Owner</h4>
-                        <input class="form-control" name="pre_owner" value=" " readonly>
+                        <input class="form-control" name="pre_owner" id="pre_owner" value=" " readonly>
                     </div>
                     <div class="form-group" style="text-align: left; margin: 0 auto;">
                         <h4>Previous Department</h4>
-                        <input class="form-control" name="pre_dept" value=" " readonly>
+                        <input class="form-control" name="pre_dept" id="pre_dept" value=" " readonly>
                     </div>
                 </div>
                 
