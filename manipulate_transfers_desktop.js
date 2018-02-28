@@ -1,15 +1,12 @@
 /* Written by: Jon Knight
  * Last Edited By: Mathew Ratliff
- * Date last modified: 2/25/18
+ * Date last modified: 2/28/18
  ***************************************
- *  Reason for modification (2/25/18)  *
+ *  Reason for modification (2/28/18)  *
  ***************************************
- * Added editTransfer, which allows the user to pop up the edit modal (in progress).
- * Added some checking - if pre'item' is undefined, show N/A for non-applicable.
- *                     - if "model" is empty - display "Unknown"
- * v Edited var html v
- * separated the buttons due to some glitch that caused them to
- * stack sometimes rather than stay side-by-side
+ * Small changes such as only show 25 characters on notes,
+ * edit button don't work still
+ * other stuff that might matter in the future
  * ((((((((((((()))))))))))))*
  * Dependencies: desktop.html
  */
