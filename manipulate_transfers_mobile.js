@@ -71,9 +71,9 @@ function setSelectedID(button)
     selectedTransferID = parseInt($(button).closest('.panel-collapse').attr('id'));
     
     $('#IDEdit').val(transfersArray[selectedTransferID].itemID);
-    //transfersArray[selectedTransferID].newRoom = $('#newRoomEdit').val();
-    //transfersArray[selectedTransferID].newOwner = $('#newOwnerEdit').val();
-    //transfersArray[selectedTransferID].newDept = $('#newDeptEdit').val();
+    $('#newRoomEdit').selectpicker('val', transfersArray[selectedTransferID].newRoom);
+    $('#newOwnerEdit').selectpicker('val', transfersArray[selectedTransferID].newOwner);
+    $('#newDeptEdit').selectpicker('val', transfersArray[selectedTransferID].newDept);
     $('#notesEdit').val(transfersArray[selectedTransferID].notes);
     $('#modelEdit').val(transfersArray[selectedTransferID].model);
     $('#preRoomEdit').val(transfersArray[selectedTransferID].preRoom);
@@ -88,13 +88,8 @@ function submitEdit()
         //Add an additional check here to make sure the ID is valid
         //Do this by making sure the fields populated by the database aren't empty.
         
-        if($('#newRoomEdit').val() != null &&
-           $('#newOwnerEdit').val() != null &&
-           $('#newDeptEdit').val() != null)
-        {            
-            
-            
-            
+        if($('#newRoomEdit').val() != null && $('#newOwnerEdit').val() != null && $('#newDeptEdit').val() != null)
+        {                        
             transfersArray[selectedTransferID].itemID = $('#IDEdit').val();
             transfersArray[selectedTransferID].newRoom = $('#newRoomEdit').val();
             transfersArray[selectedTransferID].newOwner = $('#newOwnerEdit').val();
@@ -125,9 +120,7 @@ function submitNew()
         //Add an additional check here to make sure the ID is valid
         //Do this by making sure the fields populated by the database aren't empty.
         
-        if($('#newRoom').val() != null &&
-           $('#newOwner').val() != null &&
-           $('#newDept').val() != null)
+        if($('#newRoom').val() != null && $('#newOwner').val() != null && $('#newDept').val() != null)
         {
             var transfer = {
                 itemID:$('#IDAdd').val(),
@@ -143,6 +136,9 @@ function submitNew()
             
             
             $('#IDAdd').val('');
+            $('#newRoom').selectpicker('val', 'none');
+            $('#newOwner').selectpicker('val', 'none');
+            $('#newDept').selectpicker('val', 'none');
             $('#notes').val('');
             $('#model').val('');
             $('#pre_room').val('');

@@ -21,9 +21,9 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
     </head>
-    <body background="img_assets/pelli.svg">
+    <body>
 
-        <nav class="navbar">
+        <nav class="navbar navbar-default">
           <div class="container-fluid">
             <ul class="nav navbar-nav">
                 <li>
@@ -32,13 +32,15 @@
                         <option>lbates@pstcc.edu</option>
                     </select>
                 </li>
-                <li class="active"><button class="btn btn-success btn-block" style="">Submit Transfer</button></li>
+                <li class="active"><button class="btn btn-success btn-block">Submit Transfer</button></li>
                 <li><button class="btn btn-danger btn-block" onclick="clearAll()">Clear Items</button></li>
             </ul>
           </div>
         </nav>
-
+        
         <div class="container-fluid mobile">
+            
+          <div id="items">
             <button id="add-item" data-toggle="modal" data-target="#Add_Modal"><span class="glyphicon glyphicon-plus"></span></button>
 
             <!-- The commented snippet below is the template for a single record. This is the markup necessary for every new record.
@@ -75,7 +77,7 @@
                </div>
                </div>
               -->
-
+          </div>
         </div>
 		
 		<!-- Add Modal start -->
@@ -89,7 +91,6 @@
                 <h4 class="modal-title">New Transfer</h4>
               </div>
               <div class="modal-body">
-                <form class="form" action="#">
                 <div class="form-group" style="text-align: left; margin: 0 auto;">
                     <h4>PSCC ID#</h4>
                     <div class="input-group">
@@ -173,11 +174,26 @@
                     <input class="form-control" id="pre_dept" name="pre_dept" value=" " readonly>
                 </div>
 
-              </form>
+              </div>
+              <!-- Edit Modal content end -->
 
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="submitEdit()">Save Changes</button>
+              </div>
             </div>
             <!-- Add Modal content end -->
 
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="submitNew()">Save Changes</button>
+              </div>
+            </div>
+
+          </div>
+        <!-- Add Modal end -->
+    
+    
         <!-- Edit Modal start -->
         <div id="Edit_Modal1" class="modal fade" role="dialog">
           <div class="modal-dialog">
@@ -194,7 +210,7 @@
                 <div class="form-group" style="text-align: left; margin: 0 auto;">
                     <h4>PSCC ID#</h4>
                     <div class="input-group">
-                        <input class="form-control" name="ID" id="IDEdit" placeholder="Please enter/scan ID" value="">
+                        <input class="form-control" name="ID" id="IDAdd" placeholder="Please enter/scan ID" value="">
                         <span class="barcode input-group-addon" onclick="scan(IDAdd)"><span class="glyphicon glyphicon-barcode"></span></span>
                     </div>
                 </div>
@@ -250,9 +266,7 @@
 
                 <div class="form-group">
                     <h4>Notes</h4>
-                    <textarea id="notesEdit" class="form-control" name="notes">
-
-                    </textarea>
+                    <textarea id="notesEdit" class="form-control" name="notes"></textarea>
                 </div>
 
                 <div class="form-group" style="text-align: left; margin: 0 auto;">
@@ -286,16 +300,6 @@
           </div>
         </div>
         <!-- Edit Modal end -->
-
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="submitNew()">Save Changes</button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-        <!-- Add Modal end -->
 
         <script src="barcode/quagga/dist/quagga.min.js"></script>
         <script src="barcode/scanner.js"></script>
