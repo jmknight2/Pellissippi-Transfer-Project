@@ -85,7 +85,7 @@
                 ?>
 
           <form method="post">
-            <div class="form-group" style="text-align: left; margin: 0 auto;">
+            <div class="form-group">
                 <div class="input-group">
                     <input class="form-control" style="width: 100%" name="pwd" id="pwd" placeholder="Please enter technician password" type="password">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
@@ -123,10 +123,10 @@ any: function() {
 }
 };
 if (isMobile.any()) {
-  document.location.replace('mobile.html');
+  document.location.replace('mobile.php');
 }
 else {
-  document.location.replace('desktop.html');
+  document.location.replace('desktop.php');
 }
 </script>
 </body>
