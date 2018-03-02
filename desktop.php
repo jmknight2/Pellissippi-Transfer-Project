@@ -232,6 +232,113 @@
         </div>
         <!-- Add Modal end -->
         
+        <!-- Edit Modal start -->
+        <div id="Edit_Modal1" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Edit Modal content start-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Transfer</h4>
+                <h4 class="modal-title">Edit Transfer</h4>
+              </div>
+              <div class="modal-body">
+                <form class="form" action="#">
+                <div class="form-group" style="text-align: left; margin: 0 auto;">
+                    <h4>PSCC ID#</h4>
+                    <div class="input-group">
+                        <input class="form-control" name="ID" id="IDAdd" placeholder="Please enter/scan ID" value="">
+                        <span class="barcode input-group-addon" onclick="scan(IDAdd)"><span class="glyphicon glyphicon-barcode"></span></span>
+                    </div>
+                </div>
+				
+
+                <div class="form-group" style="text-align: left; margin: 0 auto;">
+                    <h4>New Room</h4>
+                    <select id="newRoomEdit" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
+						<?php
+							$query= "SELECT DISTINCT Location FROM [Complete Active inventory list 52914];";
+							$options = queryDB($con1, $query);
+							
+							foreach($options as $row) 
+							{
+								foreach($row as $value) 
+								{
+									echo "<option>" . $value . "</option>";
+								}
+							}
+						?>
+                    </select>
+                </div>
+                <div class="form-group" style="text-align: left; margin: 0 auto;">
+                    <h4>New Owner</h4>
+                    <select id="newOwnerEdit" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
+						<?php
+							$query= "SELECT DISTINCT Custodian FROM [Complete Active inventory list 52914];";
+							$options = queryDB($con1, $query);
+							
+							foreach($options as $row) 
+							{
+								foreach($row as $value) 
+								{
+									echo "<option>" . $value . "</option>";
+								}
+							}
+						?>
+                    </select>
+                </div>
+                <div class="form-group" style="text-align: left; margin: 0 auto;">
+                    <h4>New Department</h4>
+                    <select id="newDeptEdit" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
+						<?php
+							$query= "SELECT DISTINCT DeptTo FROM tblTransTemp_072017;";
+							$options = queryDB($con1, $query);
+							
+							foreach($options as $row) 
+								foreach($row as $value) 
+									echo "<option>" . $value . "</option>";
+						?>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <h4>Notes</h4>
+                    <textarea id="notesEdit" class="form-control" name="notes"></textarea>
+                </div>
+
+                <div class="form-group" style="text-align: left; margin: 0 auto;">
+                    <h4>Model</h4>
+                    <input id="modelEdit" class="form-control" name="model" value="" readonly>
+                </div>
+                <div class="form-group" style="text-align: left; margin: 0 auto;">
+                    <h4>Previous Room</h4>
+                    <input id="preRoomEdit" class="form-control" name="pre_room" value="" readonly>
+                </div>
+                <div class="form-group" style="text-align: left; margin: 0 auto;">
+                    <h4>Previous Owner</h4>
+                    <input id="preOwnerEdit" class="form-control" name="pre_owner" value="" readonly>
+                </div>
+                <div class="form-group" style="text-align: left; margin: 0 auto;">
+                    <h4>Previous Department</h4>
+                    <input id="preDeptEdit" class="form-control" name="pre_dept" value="" readonly>
+                </div>
+
+              </form>
+
+              </div>
+              <!-- Edit Modal content end -->
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="submitEdit()">Save Changes</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- Edit Modal end -->
+        
         <script src="manipulate_transfers_desktop.js"></script>
     </body>
 </html>
