@@ -60,12 +60,6 @@ function deleteTransfer(button)
     $(button).closest('.panel').remove();
 }
 
-function clearAll()
-{
-    transfersArray = [];
-    $('.mobile .panel').remove();
-}
-
 function setSelectedID(button)
 {
     selectedTransferID = parseInt($(button).closest('.panel-collapse').attr('id'));

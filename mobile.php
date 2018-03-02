@@ -1,11 +1,18 @@
-<!-- Designer(s): Jon Knight
-  -- Date last modified: 2/2/2018 (Zachary Mitchell - minor edit)
+<!-- Designer(s): Jon Knight, Matthew Ratliff
+  -- Date last modified: 3/2/2018 (Zachary Mitchell - minor edit)
   -- Dependices: Stylesheet = "mobile.css"
   -->
   
 <?php
+    session_start();
 	include("phpFunctions.php");
 	$con = connectToDB();
+
+    if(!$_SESSION['auth'])
+    {
+        header('Location: index.php');
+        die();
+    }
 ?>
 
 <html lang="en">
@@ -33,7 +40,7 @@
                     </select>
                 </li>
                 <li class="active"><button class="btn btn-success btn-block" onclick="submitFinal()">Submit Transfer</button></li>
-                <li><button class="btn btn-danger btn-block" onclick="clearAll()">Clear Items</button></li>
+                <li><button class="btn btn-danger btn-block" onclick="window.location.href='logout.php'">Logout</button></li>
             </ul>
           </div>
         </nav>
