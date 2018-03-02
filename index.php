@@ -168,7 +168,7 @@
         </script>
         </body>
         </html>
-  EOT;
+EOT;
           echo $script;
       }
     ?>
