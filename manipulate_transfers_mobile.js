@@ -6,7 +6,7 @@ var transfersArray = [];
 var selectedTransferID;
 
 function refreshList()
-{
+{           
     $('.mobile .panel').remove();
     
     transfersArray.forEach(function(element, index){
@@ -42,7 +42,7 @@ function refreshList()
 
                            <p><b>Notes: </b>` + notes + `</p>
                            <button class="btn btn-danger delete-btn" onclick="deleteTransfer(this)">Remove</button>
-                           <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#Edit_Modal1" onclick="setSelectedID(this)">Edit</button>
+                           <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#Add_Modal" onclick="setSelectedID(this)">Edit</button>
                        </div>
                    </div>
                    </div>`;
@@ -70,37 +70,65 @@ function setSelectedID(button)
 {
     selectedTransferID = parseInt($(button).closest('.panel-collapse').attr('id'));
     
-    $('#IDEdit').val(transfersArray[selectedTransferID].itemID);
-    $('#newRoomEdit').selectpicker('val', transfersArray[selectedTransferID].newRoom);
-    $('#newOwnerEdit').selectpicker('val', transfersArray[selectedTransferID].newOwner);
-    $('#newDeptEdit').selectpicker('val', transfersArray[selectedTransferID].newDept);
-    $('#notesEdit').val(transfersArray[selectedTransferID].notes);
-    $('#modelEdit').val(transfersArray[selectedTransferID].model);
-    $('#preRoomEdit').val(transfersArray[selectedTransferID].preRoom);
-    $('#preOwnerEdit').val(transfersArray[selectedTransferID].preOwner);
-    $('#preDeptEdit').val(transfersArray[selectedTransferID].preDept);
+    console.log("Selected ID: " + selectedTransferID);
+    
+    $('#IDAdd').val(transfersArray[selectedTransferID].itemID);
+    $('#newRoom').selectpicker('val', transfersArray[selectedTransferID].newRoom);
+    $('#newOwner').selectpicker('val', transfersArray[selectedTransferID].newOwner);
+    $('#newDept').selectpicker('val', transfersArray[selectedTransferID].newDept);
+    $('#notes').val(transfersArray[selectedTransferID].notes);
+    $('#model').val(transfersArray[selectedTransferID].model);
+    $('#pre_room').val(transfersArray[selectedTransferID].preRoom);
+    $('#pre_owner').val(transfersArray[selectedTransferID].preOwner);
+    $('#pre_dept').val(transfersArray[selectedTransferID].preDept);
+}
+
+function submitFinal()
+{
+    transfersArray.forEach(function(element, index){
+        element.custodian = $('#custodian').val();
+    });
+    
+    var myJsonString = JSON.stringify(transfersArray);
+    console.log(myJsonString);
+}
+
+function submit()
+{
+    if(selectedTransferID === undefined)
+    {
+        submitNew();
+    }
+    else
+    {
+        submitEdit();
+    }
 }
 
 function submitEdit()
 {
-    if($('#IDEdit').val() != '')
+    if($('#IDAdd').val() != '')
     {
         //Add an additional check here to make sure the ID is valid
         //Do this by making sure the fields populated by the database aren't empty.
         
-        if($('#newRoomEdit').val() != null && $('#newOwnerEdit').val() != null && $('#newDeptEdit').val() != null)
+        if($('#newRoom').val() != null && $('#newOwner').val() != null && $('#newDept').val() != null)
         {                        
-            transfersArray[selectedTransferID].itemID = $('#IDEdit').val();
-            transfersArray[selectedTransferID].newRoom = $('#newRoomEdit').val();
-            transfersArray[selectedTransferID].newOwner = $('#newOwnerEdit').val();
-            transfersArray[selectedTransferID].newDept = $('#newDeptEdit').val();
-            transfersArray[selectedTransferID].notes = $('#notesEdit').val();
-            transfersArray[selectedTransferID].model = $('#modelEdit').val();
-            transfersArray[selectedTransferID].preRoom = $('#preRoomEdit').val();
-            transfersArray[selectedTransferID].preOwner = $('#preOwnerEdit').val();
-            transfersArray[selectedTransferID].preDept = $('#preDeptEdit').val();
+            transfersArray[selectedTransferID].itemID = $('#IDAdd').val();
+            transfersArray[selectedTransferID].newRoom = $('#newRoom').val();
+            transfersArray[selectedTransferID].newOwner = $('#newOwner').val();
+            transfersArray[selectedTransferID].newDept = $('#newDept').val();
+            transfersArray[selectedTransferID].notes = $('#notes').val();
+            transfersArray[selectedTransferID].model = $('#model').val();
+            transfersArray[selectedTransferID].preRoom = $('#pre_room').val();
+            transfersArray[selectedTransferID].preOwner = $('#pre_owner').val();
+            transfersArray[selectedTransferID].preDept = $('#pre_dept').val();
             
             refreshList();
+            
+            selectedTransferID = undefined;
+            
+            console.log(JSON.stringify(transfersArray));
         }
         else
         {
@@ -131,27 +159,18 @@ function submitNew()
                 model:$('#model').val(),
                 preRoom:$('#pre_room').val(),
                 preOwner:$('#pre_owner').val(),
-                preDept:$('#pre_dept').val()
+                preDept:$('#pre_dept').val(),
+                custodian:undefined
             };
             
-            
-            $('#IDAdd').val('');
-            $('#newRoom').selectpicker('val', 'none');
-            $('#newOwner').selectpicker('val', 'none');
-            $('#newDept').selectpicker('val', 'none');
-            $('#notes').val('');
-            $('#model').val('');
-            $('#pre_room').val('');
-            $('#pre_owner').val('');
-            $('#pre_dept').val('');
-            
+            console.log(JSON.stringify(transfer));
             transfersArray.push(transfer);
             
             refreshList();
         }
         else
         {
-            alert("Please ensure you've comppleted all required fields.");
+            alert("Please ensure you've completed all required fields.");
         }
     }
     else
@@ -159,6 +178,19 @@ function submitNew()
         alert('Please enter an ID');
     }
 }
+
+$('#Add_Modal').on('hidden.bs.modal', function () {
+    
+    $('#IDAdd').val('');
+    $('#newRoom').selectpicker('val', 'none');
+    $('#newOwner').selectpicker('val', 'none');
+    $('#newDept').selectpicker('val', 'none');
+    $('#notes').val('');
+    $('#model').val('');
+    $('#pre_room').val('');
+    $('#pre_owner').val('');
+    $('#pre_dept').val('');
+})
 
 function getInfoFromTag(str) 
 {
