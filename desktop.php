@@ -20,34 +20,25 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
-        
-        <script>
-            $(document).ready(function() {
-                $('.delete-btn').click(function(event) {
-                  event.preventDefault();
-                  $(this).closest('tr').remove();
-                });
-            });
-        </script>
-        
     </head>
     <body>
         
         <nav class="navbar navbar-default navbar-fixed-top">
           <div class="container-fluid">
             <div class="navbar-header">
-              <a class="navbar-brand" style="height: 100px;" href="#"><img class="thumbnail" style="height: 100%;" src="img_assets/pellissippilogo.png"/></a>
+              <a class="navbar-brand" style="height: 100px;"><img style="height: 100%;" src="img_assets/pelli_full.svg"/></a>
             </div>
             <ul class="nav navbar-nav">
                 <li>
                     <select class="form-control">
+                      <!-- possibly make this auto-filled with database stuff -->
                         <option>jmknight2@pstcc.edu</option>
                         <option>lbates@pstcc.edu</option>
                     </select>
                 </li>
                 
-                <li><button data-toggle="modal" data-target="#Add_Modal" class="btn btn-block" style="color: white; background-color: #FCD955">Add Item</button></li>
-                <li class="active"><button class="btn btn-success btn-block" style="">Submit Transfer</button></li>
+                <li><button data-toggle="modal" data-target="#Add_Modal" class="btn btn-block" style="color: white; background-color: #FCD955" >Add Item</button></li>
+                <li class="active"><button class="btn btn-success btn-block" onclick="submitFinal()">Submit Transfer</button></li>
                 <li><button class="btn btn-danger btn-block" style="">Clear Items</button></li>
             </ul>
           </div>
@@ -68,7 +59,7 @@
                     <th>Notes</th>
                     <th></th>
                 </thead>
-                <tbody>
+                <tbody class="content-area">
                 
                     
                     <!--
@@ -131,19 +122,20 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">New Transfer</h4>
               </div>
-              <div class="modal-body">
-                <form class="form" action="#">
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>PSCC ID#</h4>
-                    <input class="form-control" name="ID" id="ID" placeholder="Please enter/scan ID" value="1004">
-                </div>
-                
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>New Room</h4>
-					<select class="form-control selectpicker" id="roomNum" data-show-subtext="true" data-live-search="true">
-						<option>Please choose room...</option>
+              <div class="modal-body container-fluid">
+                  
+                <div class="col-sm-6">
+                    <div class="form-group" style="text-align: left; margin: 0 auto;">
+                        <h4>PSCC ID#</h4>
+                        <input class="form-control" name="ID" id="IDAdd" placeholder="Please enter/scan ID" value="" onkeyup="getInfoFromTag(this.value)">
+                    </div>
+
+                    <div class="form-group" style="text-align: left; margin: 0 auto;">
+                        <h4>New Room</h4>
+                        <select class="form-control selectpicker" id="newRoom" data-show-subtext="true" data-live-search="true">
+                            <option disabled selected value="none">Please choose room...</option>
 						<?php
-							$query= "SELECT DISTINCT Location FROM inv;";
+							$query= "SELECT DISTINCT Location FROM [Complete Active inventory list 52914];";
 							$options = queryDB($con1, $query);
 							
 							foreach($options as $row) 
@@ -154,14 +146,17 @@
 								}
 							}
 						?>
-					</select>
+					   </select>
+                    </div>
                 </div>
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>New Owner</h4>
-                    <select class="form-control selectpicker" id="newOwner" data-show-subtext="true" data-live-search="true">
-                        <option>Please choose owner...</option>
+                  
+                <div class="col-sm-6">
+                    <div class="form-group" style="text-align: left; margin: 0 auto;">
+                        <h4>New Owner</h4>
+                        <select class="form-control selectpicker" id="newOwner" data-show-subtext="true" data-live-search="true">
+                            <option disabled selected value="none">Please choose room...</option>
 						<?php
-							$query= "SELECT DISTINCT Custodian FROM inv;";
+							$query= "SELECT DISTINCT Custodian FROM [Complete Active inventory list 52914];";
 							$options = queryDB($con1, $query);
 							
 							foreach($options as $row) 
@@ -172,55 +167,64 @@
 								}
 							}
 						?>
-                    </select>
-                </div>
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>New Department</h4>
-                    <select class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
-                        <option>Please choose dept. ...</option>
-						<?php
-							$query= "SELECT DISTINCT DeptTo FROM tblTransTemp_072017;";
-							$options = queryDB($con1, $query);
-							
-							foreach($options as $row) 
-								foreach($row as $value) 
-									echo "<option>" . $value . "</option>";
-						?>
-                    </select>
-                </div>
+                        </select>
+                    </div>   
+
+                    <div class="form-group" style="text-align: left; margin: 0 auto;">
+                        <h4>New Department</h4>
+                        <select class="form-control selectpicker" id="newDept" data-show-subtext="true" data-live-search="true">
+                            <option disabled selected>Please choose dept. ...</option>
+                            <?php
+                                $query= "SELECT DISTINCT DeptTo FROM tblTransTemp_072017;";
+                                $options = queryDB($con1, $query);
+
+                                foreach($options as $row) 
+                                {
+                                    foreach($row as $value) 
+                                    {
+                                        echo "<option>" . $value . "</option>";
+                                    }
+                                }
+                            ?>
+                        </select>
+                    </div>
+                  </div>
                 
-                <div class="form-group">
-                    <h4>Notes</h4>
-                    <textarea class="form-control" name="notes">
-                    
-                    </textarea>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <h4>Notes</h4>
+                        <textarea maxlength="255" class="form-control" name="notes" id="notes"></textarea>
+                    </div>
                 </div>    
                     
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>Model</h4>
-                    <input class="form-control" name="model" value=" " readonly>
+                <div class="col-sm-6">  
+                    <div class="form-group" style="text-align: left; margin: 0 auto;">
+                        <h4>Model</h4>
+                        <input class="form-control" id="model" name="model" value=" " readonly>
+                    </div>
+                    <div class="form-group" style="text-align: left; margin: 0 auto;">
+                        <h4>Previous Room</h4>
+                        <input class="form-control" id="pre_room" name="pre_room" value=" " readonly>
+                    </div>
                 </div>
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>Previous Room</h4>
-                    <input class="form-control" name="pre_room" value=" " readonly>
-                </div>
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>Previous Owner</h4>
-                    <input class="form-control" name="pre_owner" value=" " readonly>
-                </div>
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>Previous Department</h4>
-                    <input class="form-control" name="pre_dept" value=" " readonly>
-                </div>
-                
-              </form>
+                    
+                <div class="col-sm-6">  
+                    <div class="form-group" style="text-align: left; margin: 0 auto;">
+                        <h4>Previous Owner</h4>
+                        <input class="form-control" id="pre_owner" name="pre_owner" value=" " readonly>
+                    </div>
+                    <div class="form-group" style="text-align: left; margin: 0 auto;">
+                        <h4>Previous Department</h4>
+                        <input class="form-control" id="pre_dept" name="pre_dept" value=" " readonly>
+                    </div>
+                </div>    
                 
               </div>
               <!-- Add Modal content end -->  
                   
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" data-dismiss="modal">Save Changes</button>
+                <button type="button" class="btn btn-success" onclick="submitNew();">Save Changes</button>
               </div>
             </div>
 
@@ -228,5 +232,6 @@
         </div>
         <!-- Add Modal end -->
         
+        <script src="manipulate_transfers_desktop.js"></script>
     </body>
 </html>
