@@ -174,15 +174,7 @@
                     <input class="form-control" id="pre_dept" name="pre_dept" value=" " readonly>
                 </div>
 
-              </div>
-              <!-- Edit Modal content end -->
-
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="submitEdit()">Save Changes</button>
-              </div>
-            </div>
-            <!-- Add Modal content end -->
+                </div>
 
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
@@ -191,6 +183,7 @@
             </div>
 
           </div>
+        </div>
         <!-- Add Modal end -->
     
     
@@ -203,14 +196,12 @@
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Edit Transfer</h4>
-                <h4 class="modal-title">Edit Transfer</h4>
               </div>
               <div class="modal-body">
-                <form class="form" action="#">
                 <div class="form-group" style="text-align: left; margin: 0 auto;">
                     <h4>PSCC ID#</h4>
                     <div class="input-group">
-                        <input class="form-control" name="ID" id="IDAdd" placeholder="Please enter/scan ID" value="">
+                        <input class="form-control" name="ID" id="IDEdit" placeholder="Please enter/scan ID" value="">
                         <span class="barcode input-group-addon" onclick="scan(IDAdd)"><span class="glyphicon glyphicon-barcode"></span></span>
                     </div>
                 </div>
@@ -285,8 +276,6 @@
                     <h4>Previous Department</h4>
                     <input id="preDeptEdit" class="form-control" name="pre_dept" value="" readonly>
                 </div>
-
-              </form>
 
               </div>
               <!-- Edit Modal content end -->
