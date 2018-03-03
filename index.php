@@ -1,9 +1,6 @@
 <?php
     session_start();
     $_SESSION['auth'] = false;
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
 ?>
 
 <!doctype html>
@@ -26,7 +23,6 @@
     body
     {
       background: radial-gradient(rgb(255, 210, 79), rgb(0, 75, 141));
-      /* background-repeat: no-repeat; */
       background-size: cover;
       color: white;
       display: flex;
@@ -79,9 +75,6 @@
 
         display: block;
         float: none;
-
-        /* left: 20%;
-        top: 20%; */
       }
       h2 {
         font-size: 20px;

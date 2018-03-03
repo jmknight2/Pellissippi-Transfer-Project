@@ -191,9 +191,18 @@ function getInfoFromTag(str)
 	
 	//window.alert(str.length);
 	
-	if (str.length < 6) 
+	if (str.length < 6 || str.length > 6) 
 	{
-		document.getElementById("notes").value = "Tag not found.";
+		if($('#IDAdd').hasClass('has-success'))
+        {
+            $('#IDAdd').removeClass('has-success');
+            $('#IDAdd').addClass('has-error');
+        }
+        else
+        {
+            $('#IDAdd').addClass('has-error');
+        }
+        
 		document.getElementById("model").value = "";
 		document.getElementById("pre_room").value = "";
 		document.getElementById("pre_owner").value = "";
@@ -214,12 +223,21 @@ function getInfoFromTag(str)
 				{
 					var resultsArr = results.split(",");
 					console.log(resultsArr);
-					
+                    
+                    if($('#IDAdd').hasClass('has-error'))
+                    {
+                        $('#IDAdd').removeClass('has-error');
+                        $('#IDAdd').addClass('has-success');
+                    }
+                    else
+                    {
+                        $('#IDAdd').addClass('has-success');
+                    }
+                    
 					document.getElementById("model").value = resultsArr[0];
 					document.getElementById("pre_room").value = resultsArr[1];
 					document.getElementById("pre_owner").value = resultsArr[2];
 					document.getElementById("pre_dept").value = "Not available";
-					document.getElementById("notes").value = "";
 				}
 			}
 		};
