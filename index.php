@@ -94,17 +94,16 @@
           <h1>Transfer Application</h1>
 
               <?php
-                    $pwd = 'Password';
                     if (isset($_POST["submit"]))
                     {
-                        if($_POST["pwd"] == $pwd)
-                        {
-                            $_SESSION['auth'] = true;
-                        }
-                        else if($_POST["pwd"] == '')
+                        if($_POST["pwd"] == '')
                         {
                             $_SESSION['auth'] = false;
                             echo "<script>alert('Password cannot be blank.');</script>";
+                        }
+						else if(exec('cd verification && scramblerVerify.exe '.$_POST["pwd"].' -f nothingInteresting.txt') == 'True')
+                        {
+                            $_SESSION['auth'] = true;
                         }
                         else
                         {
