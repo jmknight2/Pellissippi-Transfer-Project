@@ -1,3 +1,11 @@
+/*
+ * Desginer(s): Jon Knight
+ * Date Last Edited: 2/2/2018
+ * Dependencies: Stylesheet for "mobile.HTML/PHP".
+ */
+body {
+  background-color: ghostwhite;
+}
 td
 {
     font-size: 14px;
@@ -10,26 +18,35 @@ td
     color: black;
 }
 
-.barcode:hover
-{
-    cursor: pointer;
+.navbar {
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+.navbar-default {
+  background-color: #233b79;
+  border-color: #fcd955;
+  border-bottom-width: medium;
+  border-left-width: medium;
+  border-right-width: medium;
+  border-top-width: 0px;
+  border-bottom-style: solid;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
-.mobile
+.error
 {
-    display: none;
+    background-color: rgba(255, 0, 0, 0.3);
 }
 
-.navbar
+.success
 {
-    background-color: #0066cc;
+    background-color: rgba(0, 255, 0, 0.3);
 }
 
-.navbar-header
-{
-    height: 100px;
+select {
+  margin-top: -10px;
 }
-
 .panel
 {
     margin-top: 15px;
@@ -51,7 +68,7 @@ td
     color: black;
     width: 50px;
     height: 50px;
-    background-color: 	#5bc0de;
+    background-color: #0066cc;
     border-radius: 100px;
     border: 2px solid black;
     position: fixed;
@@ -64,21 +81,26 @@ td
 
 #add-item:active
 {
-    background-color: #29a329;
+    background-color: #004d99;
 }
 
-@media only screen and (max-device-width : 768px)
+.mobile
 {
-    .mobile
-    {
-        display: inherit;
-        margin-top: 230px;
-    }
-
-    .navbar-nav > li
-    {
-        margin-top: 10px;
-        margin-right: 10px;
-        margin-left: 10px;
-    }
+  background-image: url('../img_assets/pelli.svg');
+  background-size: 70% 90%;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 69%;
+  display: inherit;
+  overflow-y:scroll;
+  margin: 0px;
+}
+#items {
+  opacity: 100%;
+}
+.navbar-nav > li
+{
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
 }
