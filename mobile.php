@@ -1,16 +1,23 @@
-<!-- Designer(s): Jon Knight
-  -- Date last modified: 2/2/2018 (Zachary Mitchell - minor edit)
-  -- Dependices: Stylesheet = "mobile.css"
+<!-- Designer(s): Jon Knight, Matthew Ratliff, (Zachary Mitchell - minor edit)
+  -- Date last modified: 3/2/2018 
+  -- Dependices: Stylesheet = "mobile.css", JS = "manipulate_transfers_mobile.js"
   -->
   
 <?php
+    session_start();
 	include("phpFunctions.php");
 	$con = connectToDB();
+
+    if(!$_SESSION['auth'])
+    {
+        header('Location: index.php');
+        die();
+    }
 ?>
 
 <html lang="en">
     <head>
-        <title>UI Demo 4</title>
+        <title>PSTCC Transfer</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -27,13 +34,13 @@
           <div class="container-fluid">
             <ul class="nav navbar-nav">
                 <li>
-                    <select class="form-control">
+                    <select class="form-control" id="custodian">
                         <option>jmknight2@pstcc.edu</option>
                         <option>lbates@pstcc.edu</option>
                     </select>
                 </li>
-                <li class="active"><button class="btn btn-success btn-block">Submit Transfer</button></li>
-                <li><button class="btn btn-danger btn-block" onclick="clearAll()">Clear Items</button></li>
+                <li class="active"><button class="btn btn-success btn-block" onclick="submitFinal()">Submit Transfer</button></li>
+                <li><button class="btn btn-danger btn-block" onclick="window.location.href='logout.php'">Logout</button></li>
             </ul>
           </div>
         </nav>
@@ -43,40 +50,6 @@
           <div id="items">
             <button id="add-item" data-toggle="modal" data-target="#Add_Modal"><span class="glyphicon glyphicon-plus"></span></button>
 
-            <!-- The commented snippet below is the template for a single record. This is the markup necessary for every new record.
-              -- There are 2 things that must be different in each panel for them to work: the ID of the panel-collapse, and the
-              -- href attribute of the panel itself.
-              -- ** Make sure that the href is identical to the panel-collpse ID **
-              --
-              -->
-
-            <!--
-               <div class="panel panel-primary" data-toggle="collapse" href="#collapse2">
-               <div class="panel-heading">
-                  <h4 class="panel-title">
-                     <a><b>ID#</b> 1005 | Dell Inspiron 9100</a>
-                     <span class="glyphicon glyphicon-chevron-down pull-right"></span>
-                   </h4>
-               </div>
-               <div id="collapse2" class="panel-collapse collapse">
-                   <div class="panel-body">
-                       <table class="table table-condensed">
-                           <tr><td><b>Model </b></td><td>Dell Inspiron 9100</td></tr>
-                           <tr><td><b>From (Room) </b></td><td>MC149A</td></tr>
-                           <tr><td><b>Previous Owner </b></td><td>Jon Knight</td></tr>
-                           <tr><td><b>Dept. From </b></td><td>CITC</td></tr>
-                           <tr><td><b>To (Room) </b></td><td>MC253</td></tr>
-                          <tr><td><b>New Owner </b></td><td>Jon Knight</td></tr>
-                           <tr><td><b>Dept. To </b></td><td>CITC</td></tr>
-                       </table>
-
-                       <p><b>Notes: </b>This is only a test transfer.</p>
-                       <button class="btn btn-danger delete-btn">Remove</button>
-                       <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#Edit_Modal1">Edit</button>
-                   </div>
-               </div>
-               </div>
-              -->
           </div>
         </div>
 		
@@ -88,14 +61,14 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">New Transfer</h4>
+                <h4 class="modal-title">Transfer Details</h4>
               </div>
               <div class="modal-body">
                 <div class="form-group" style="text-align: left; margin: 0 auto;">
                     <h4>PSCC ID#</h4>
                     <div class="input-group">
                         <input class="form-control" name="ID" id="IDAdd" placeholder="Please enter/scan ID" value="" onkeyup="getInfoFromTag(this.value)">
-                        <span class="barcode input-group-addon" onclick="scan(IDEdit)"><span class="glyphicon glyphicon-barcode"></span></span>
+                        <span class="barcode input-group-addon" onclick="scan(IDAdd)"><span class="glyphicon glyphicon-barcode"></span></span>
                     </div>
                 </div>
 
@@ -178,117 +151,13 @@
 
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="submitNew()">Save Changes</button>
+                <button type="button" class="btn btn-success" onclick="submit()">Save Changes</button>
               </div>
             </div>
 
           </div>
         </div>
         <!-- Add Modal end -->
-    
-    
-        <!-- Edit Modal start -->
-        <div id="Edit_Modal1" class="modal fade" role="dialog">
-          <div class="modal-dialog">
-
-            <!-- Edit Modal content start-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Edit Transfer</h4>
-              </div>
-              <div class="modal-body">
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>PSCC ID#</h4>
-                    <div class="input-group">
-                        <input class="form-control" name="ID" id="IDEdit" placeholder="Please enter/scan ID" value="">
-                        <span class="barcode input-group-addon" onclick="scan(IDAdd)"><span class="glyphicon glyphicon-barcode"></span></span>
-                    </div>
-                </div>
-				
-
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>New Room</h4>
-                    <select id="newRoomEdit" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
-						<?php
-							$query= "SELECT DISTINCT Location FROM [Complete Active inventory list 52914];";
-							$options = queryDB($con1, $query);
-							
-							foreach($options as $row) 
-							{
-								foreach($row as $value) 
-								{
-									echo "<option>" . $value . "</option>";
-								}
-							}
-						?>
-                    </select>
-                </div>
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>New Owner</h4>
-                    <select id="newOwnerEdit" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
-						<?php
-							$query= "SELECT DISTINCT Custodian FROM [Complete Active inventory list 52914];";
-							$options = queryDB($con1, $query);
-							
-							foreach($options as $row) 
-							{
-								foreach($row as $value) 
-								{
-									echo "<option>" . $value . "</option>";
-								}
-							}
-						?>
-                    </select>
-                </div>
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>New Department</h4>
-                    <select id="newDeptEdit" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
-						<?php
-							$query= "SELECT DISTINCT DeptTo FROM tblTransTemp_072017;";
-							$options = queryDB($con1, $query);
-							
-							foreach($options as $row) 
-								foreach($row as $value) 
-									echo "<option>" . $value . "</option>";
-						?>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <h4>Notes</h4>
-                    <textarea id="notesEdit" class="form-control" name="notes"></textarea>
-                </div>
-
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>Model</h4>
-                    <input id="modelEdit" class="form-control" name="model" value="" readonly>
-                </div>
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>Previous Room</h4>
-                    <input id="preRoomEdit" class="form-control" name="pre_room" value="" readonly>
-                </div>
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>Previous Owner</h4>
-                    <input id="preOwnerEdit" class="form-control" name="pre_owner" value="" readonly>
-                </div>
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>Previous Department</h4>
-                    <input id="preDeptEdit" class="form-control" name="pre_dept" value="" readonly>
-                </div>
-
-              </div>
-              <!-- Edit Modal content end -->
-
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="submitEdit()">Save Changes</button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-        <!-- Edit Modal end -->
 
         <script src="barcode/quagga/dist/quagga.min.js"></script>
         <script src="barcode/scanner.js"></script>
