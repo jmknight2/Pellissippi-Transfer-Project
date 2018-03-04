@@ -45,13 +45,13 @@
     #login-panel
     {
       margin: 0 auto;
-      margin-top: 20%;
+      margin-top: 14%;
       text-align: center;
       background-color: #0066cc;
       padding: 10px 60px 20px 60px;
       border-radius: 30px;
       border: 2px solid #fcd955;
-      width: 60%;
+      width: 50%;
     }
 
     @media screen and (max-width: 768px) {
