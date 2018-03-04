@@ -1,12 +1,11 @@
 /*
  * Designer(s): Jon Knight, Mathew Ratliff
- * Date Last Edited: 2/25/2018
+ * Date Last Edited: 3/04/2018
  ****
  * Reason for modification
- * Added a drop shadow to button, then added a drop shadow (mainly to easily tell what
- * row you're on) when hovering over a row.
+ * Changed what happens when addBtn is hovered over (darkens)
  ****
- * Dependencies: Stylesheet for "desktop.HTML/PHP".
+ * Dependencies: Stylesheet for "desktop.PHP".
  */
 
 tr:hover >td {
@@ -31,6 +30,9 @@ td
 .navbar
 {
   background-color: #0066cc;
+  border-style: solid medium #fcd955;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
 }
 
 .navbar-nav > li
@@ -38,4 +40,12 @@ td
   margin-top: 30px;
   margin-right: 10px;
   margin-left: 10px;
+}
+
+#addBtn {
+  color: white;
+  background-color: #FCD955;
+}
+#addBtn:hover {
+  background-color: rgba(252, 217, 85, 0.85);
 }

@@ -1,8 +1,8 @@
 <!-- Designer(s): Jon Knight, Matthew Ratliff, (Zachary Mitchell - minor edit)
-  -- Date last modified: 3/2/2018 
+  -- Date last modified: 3/2/2018
   -- Dependices: Stylesheet = "mobile.css", JS = "manipulate_transfers_mobile.js"
   -->
-  
+
 <?php
     session_start();
 	include("phpFunctions.php");
@@ -44,15 +44,15 @@
             </ul>
           </div>
         </nav>
-        
+
         <div class="container-fluid mobile">
-            
+
           <div id="items">
             <button id="add-item" data-toggle="modal" data-target="#Add_Modal"><span class="glyphicon glyphicon-plus"></span></button>
 
           </div>
         </div>
-		
+
 		<!-- Add Modal start -->
         <div id="Add_Modal" class="modal fade" role="dialog">
           <div class="modal-dialog">
@@ -79,10 +79,10 @@
 						<?php
 							$query= "SELECT DISTINCT Location FROM [Complete Active inventory list 52914];";
 							$options = queryDB($con1, $query);
-							
-							foreach($options as $row) 
+
+							foreach($options as $row)
 							{
-								foreach($row as $value) 
+								foreach($row as $value)
 								{
 									echo "<option>" . $value . "</option>";
 								}
@@ -97,10 +97,10 @@
 						<?php
 							$query= "SELECT DISTINCT Custodian FROM [Complete Active inventory list 52914];";
 							$options = queryDB($con1, $query);
-							
-							foreach($options as $row) 
+
+							foreach($options as $row)
 							{
-								foreach($row as $value) 
+								foreach($row as $value)
 								{
 									echo "<option>" . $value . "</option>";
 								}
@@ -115,9 +115,9 @@
 						<?php
 							$query= "SELECT DISTINCT DeptTo FROM tblTransTemp_072017;";
 							$options = queryDB($con1, $query);
-							
-							foreach($options as $row) 
-								foreach($row as $value) 
+
+							foreach($options as $row)
+								foreach($row as $value)
 									echo "<option>" . $value . "</option>";
 						?>
                     </select>
@@ -125,9 +125,7 @@
 
                 <div class="form-group">
                     <h4>Notes</h4>
-                    <textarea class="form-control" id="notes" name="notes">
-
-                    </textarea>
+                    <textarea class="form-control" id="notes" name="notes"></textarea>
                 </div>
 
                 <div class="form-group" style="text-align: left; margin: 0 auto;">
