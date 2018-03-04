@@ -193,6 +193,6 @@
         </div>
         <!-- Add Modal end -->
         
-        <script src="manipulate_transfers_desktop.js"></script>
+        <script src="manipulate_transfers.js"></script>
     </body>
 </html>

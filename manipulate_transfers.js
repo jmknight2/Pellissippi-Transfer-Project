@@ -1,12 +1,60 @@
-// Written by: Jon Knight (Ben Millsaps [Ajax])
-// Date last modified: 3/2/18
-// Dependencies: mobile.php
-
+/* Written by: Jon Knight
+ * Last Edited By: Mathew Ratliff
+ * Date last modified: 3/04/18
+ ***************************************
+ *  Reason for modification (3/04/18)  *
+ ***************************************
+ * Small changes such as only show 25 characters on notes,
+ * edit button don't work still
+ * other stuff that might matter in the future
+ * ((((((((((((()))))))))))))*
+ * Dependencies: desktop.html
+ */
 var transfersArray = [];
 var selectedTransferID;
+var url = window.location.pathname;
+var filename = url.substring(url.lastIndexOf('/')+1);
 
-// * Clears the screen of all panels, and adds a panel for each object in the array.
-function refreshList()
+function refreshListDesktop()
+{
+  $('.content-area tr').remove();
+
+  transfersArray.forEach(function(element, index){
+    var itemID = element.itemID;
+    var newRoom = element.newRoom;
+    var newOwner = element.newOwner;
+    var newDept = element.newDept;
+    var notes = element.notes;
+    var model = element.model;
+    var preRoom = element.preRoom;
+    var preOwner = element.preOwner;
+    var preDept = element.preDept;
+
+    var html =
+    `<tr id="`+ index +`">
+        <td>`+ itemID +`</td>
+        <td>`+ model +`</td>
+        <td>`+ preRoom +`</td>
+        <td>`+ preOwner +`</td>
+        <td>`+ preDept +`</td>
+        <td>`+ newRoom +`</td>
+        <td>`+ newOwner +`</td>
+        <td>`+ newDept +`</td>
+        <td>`+ notes.substr(0, 25) +`</td>
+        <td>
+            <button data-toggle="modal" data-target="#Add_Modal" class="btn btn-primary btn-sm" onclick="setSelectedID(this)">Edit</button>
+        </td>
+        <td>
+            <button class="btn btn-danger btn-md" onclick="deleteTransfer(this)"><span class="glyphicon glyphicon-trash"></span></button>
+        </td>
+    </tr>`;
+    var newElement = $.parseHTML(html);
+
+    $('.content-area').append(newElement);
+  });
+}
+
+function refreshListMobile()
 {           
     $('.mobile .panel').remove();
     
@@ -54,25 +102,42 @@ function refreshList()
             });
 }
 
+
 // * Called when the delete button is clicked.
 //
 // * Removes selected object from the array, and refreshes the list.
+
 function deleteTransfer(button)
 {
-    var index = $(button).closest('.panel-collapse').attr('id');
-    transfersArray.splice(index, 1);
-    $(button).closest('.panel').remove();
+    if(filename === "desktop.php")
+    {
+        var index = $(button).closest('tr').attr('id');
+        transfersArray.splice(index, 1);
+        $(button).closest('tr').remove();
+    }
+    else
+    {
+        var index = $(button).closest('.panel-collapse').attr('id');
+        transfersArray.splice(index, 1);
+        $(button).closest('.panel').remove();
+    }
 }
 
-// * Called when user presses the edit button. 
+// * Called when user presses the edit button.
 //
 // * Stores the index of the object in a global variable.
 function setSelectedID(button)
 {
-    selectedTransferID = parseInt($(button).closest('.panel-collapse').attr('id'));
+    if(filename === "desktop.php")
+    {
+        selectedTransferID = parseInt($(button).closest('tr').attr('id'));
+    }
+    else
+    {
+        selectedTransferID = parseInt($(button).closest('.panel-collapse').attr('id'));
+    }
     
-    console.log("Selected ID: " + selectedTransferID);
-    
+
     $('#IDAdd').val(transfersArray[selectedTransferID].itemID);
     $('#newRoom').selectpicker('val', transfersArray[selectedTransferID].newRoom);
     $('#newOwner').selectpicker('val', transfersArray[selectedTransferID].newOwner);
@@ -92,9 +157,18 @@ function submitFinal()
     transfersArray.forEach(function(element, index){
         element.custodian = $('#custodian').val();
     });
-    
+
     var myJsonString = JSON.stringify(transfersArray);
-    console.log(myJsonString);
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            alert(this.responseText);
+        }/* else {
+           console.log("ERROR: " + this.readyState + this.status + this.statusText + this.responseText);
+        }*/
+    };
+    xmlhttp.open("GET", "addTransfers.php?json=" + myJsonString, true);
+    xmlhttp.send(null);
 }
 
 // * Determines if the user is trying to edit a transfer, or create a new one.
@@ -117,12 +191,14 @@ function submit()
 // * Refreshes the list when the object's fields have been altered in the array.
 function submitEdit()
 {
-    if($('#IDAdd').val() != '')
-    {
-        if($('#model').val() != '' && $('#pre_room').val() != '' && $('#pre_owner').val() != '' && $('#pre_dept').val() != '')
-        {
-            if($('#newRoom').val() != null && $('#newOwner').val() != null && $('#newDept').val() != null)
-            {                        
+
+  // Remove "edit" from all of these if we manage to get it working with one modal.
+  if($('#IDAdd').val() != '')
+  {
+      if($('#model').val() != '' && $('#pre_room').val() != '' && $('#pre_owner').val() != '' && $('#pre_dept').val() != '')
+      {
+          if($('#newRoom').val() != null && $('#newOwner').val() != null && $('#newDept').val() != null)
+          {
                 transfersArray[selectedTransferID].itemID = $('#IDAdd').val();
                 transfersArray[selectedTransferID].newRoom = $('#newRoom').val();
                 transfersArray[selectedTransferID].newOwner = $('#newOwner').val();
@@ -133,25 +209,32 @@ function submitEdit()
                 transfersArray[selectedTransferID].preOwner = $('#pre_owner').val();
                 transfersArray[selectedTransferID].preDept = $('#pre_dept').val();
 
-                refreshList();
+                if(filename === "desktop.php")
+                {
+                    refreshListDesktop();
+                }
+                else
+                {
+                    refreshListMobile();
+                }
 
                 $('#Add_Modal').modal('hide');
                 selectedTransferID = undefined;
-            }
-            else
-            {
-                alert("Please ensure you've comppleted all required fields.");
-            }
-        }
-        else
-        {
-            alert("Please ensure you've entered a valid ID");
-        }
-    }
-    else
-    {
-        alert('Please enter an ID');
-    }
+          }
+          else
+          {
+              alert("Please ensure you've completed all required fields.");
+          }
+      }
+      else
+      {
+          alert("Please ensure you've entered a valid ID");
+      }
+  }
+  else
+  {
+      alert('Please enter an ID');
+  }
 }
 
 // * Called when a new transfer is added to the object array.
@@ -165,7 +248,7 @@ function submitNew()
     {
         if($('#model').val() != '' && $('#pre_room').val() != '' && $('#pre_owner').val() != '' && $('#pre_dept').val() != '')
         {
-        
+
             if($('#newRoom').val() != null && $('#newOwner').val() != null && $('#newDept').val() != null)
             {
                 var transfer = {
@@ -181,8 +264,17 @@ function submitNew()
                     custodian:undefined
                 };
 
-                transfersArray.push(transfer);    
-                refreshList();
+                transfersArray.push(transfer);
+                
+                if(filename === "desktop.php")
+                {
+                    refreshListDesktop();
+                }
+                else
+                {
+                    refreshListMobile();
+                }
+                    
 
                 $('#Add_Modal').modal('hide');
             }
@@ -205,29 +297,28 @@ function submitNew()
 // * Registers a handler for the modal close event.
 //
 // * Clears all fields on modal close.
-$('#Add_Modal').on('hidden.bs.modal', function () {
-    
-    $('#IDAdd').removeClass('error');
-    $('#IDAdd').removeClass('success');
-    
-    $('#IDAdd').val('');
-    $('#newRoom').selectpicker('val', 'none');
-    $('#newOwner').selectpicker('val', 'none');
-    $('#newDept').selectpicker('val', 'none');
-    $('#notes').val('');
-    $('#model').val('');
-    $('#pre_room').val('');
-    $('#pre_owner').val('');
-    $('#pre_dept').val('');
-});
+ $('#Add_Modal').on('hidden.bs.modal', function () {
+   $('#IDAdd').removeClass('error');
+   $('#IDAdd').removeClass('success');
+
+   $('#IDAdd').val('');
+   $('#newRoom').selectpicker('val', 'none');
+   $('#newOwner').selectpicker('val', 'none');
+   $('#newDept').selectpicker('val', 'none');
+   $('#notes').val('');
+   $('#model').val('');
+   $('#pre_room').val('');
+   $('#pre_owner').val('');
+   $('#pre_dept').val('');
+ });
 
 // * Takes the value in the ID field, searches the database for the associated info via Ajax,
 //   and returns the results to the appropriate fields.
 //
 // * Changes the color of the text field upon either success or error.
-function getInfoFromTag(str) 
+function getInfoFromTag(str)
 {
-	if (str.length < 6 || str.length > 6) 
+	if (str.length < 6 || str.length > 6)
 	{
 		if($('#IDAdd').hasClass('success'))
         {
@@ -238,28 +329,28 @@ function getInfoFromTag(str)
         {
             $('#IDAdd').addClass('error');
         }
-        
+
 		$("#model").value = "";
 		$("#pre_room").value = "";
 		$("#pre_owner").value = "";
 		$("#pre_dept").value = "";
 		return;
-	} 
-	
-	else 
+	}
+
+	else
 	{
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function()
 		{
-			if (this.readyState == 4 && this.status == 200) 
+			if (this.readyState == 4 && this.status == 200)
 			{
 				var results = this.responseText.trim();
-				
+
 				if(results !== "error")
 				{
 					var resultsArr = results.split(",");
 					console.log(resultsArr);
-                    
+
                     if($('#IDAdd').hasClass('has-error'))
                     {
                         $('#IDAdd').removeClass('error');
@@ -269,7 +360,7 @@ function getInfoFromTag(str)
                     {
                         $('#IDAdd').addClass('success');
                     }
-                    
+
 					document.getElementById("model").value = resultsArr[0];
 					document.getElementById("pre_room").value = resultsArr[1];
 					document.getElementById("pre_owner").value = resultsArr[2];

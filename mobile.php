@@ -95,7 +95,7 @@
                     <select id="newOwner" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
                         <option value="none" selected disabled>Please choose owner...</option>
 						<?php
-							$query= "SELECT DISTINCT Custodian FROM [Complete Active inventory list 52914];";
+							$query= "SELECT DISTINCT [NAME] FROM dbo_tblCustodians;";
 							$options = queryDB($con1, $query);
 
 							foreach($options as $row)
@@ -159,6 +159,6 @@
 
         <script src="barcode/quagga/dist/quagga.min.js"></script>
         <script src="barcode/scanner.js"></script>
-        <script src="manipulate_transfers_mobile.js"></script>
+        <script src="manipulate_transfers.js"></script>
     </body>
 </html>
