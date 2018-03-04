@@ -1,8 +1,8 @@
-<!-- Designer(s): Jon Knight, Matthew Ratliff
-  -- Date last modified: 3/2/2018 (Zachary Mitchell - minor edit)
-  -- Dependices: Stylesheet = "mobile.css"
+<!-- Designer(s): Jon Knight, Matthew Ratliff, (Zachary Mitchell - minor edit)
+  -- Date last modified: 3/2/2018
+  -- Dependices: Stylesheet = "mobile.css", JS = "manipulate_transfers_mobile.js"
   -->
-  
+
 <?php
     session_start();
 	include("phpFunctions.php");
@@ -44,49 +44,15 @@
             </ul>
           </div>
         </nav>
-        
+
         <div class="container-fluid mobile">
-            
+
           <div id="items">
             <button id="add-item" data-toggle="modal" data-target="#Add_Modal"><span class="glyphicon glyphicon-plus"></span></button>
 
-            <!-- The commented snippet below is the template for a single record. This is the markup necessary for every new record.
-              -- There are 2 things that must be different in each panel for them to work: the ID of the panel-collapse, and the
-              -- href attribute of the panel itself.
-              -- ** Make sure that the href is identical to the panel-collpse ID **
-              --
-              -->
-
-            <!--
-               <div class="panel panel-primary" data-toggle="collapse" href="#collapse2">
-               <div class="panel-heading">
-                  <h4 class="panel-title">
-                     <a><b>ID#</b> 1005 | Dell Inspiron 9100</a>
-                     <span class="glyphicon glyphicon-chevron-down pull-right"></span>
-                   </h4>
-               </div>
-               <div id="collapse2" class="panel-collapse collapse">
-                   <div class="panel-body">
-                       <table class="table table-condensed">
-                           <tr><td><b>Model </b></td><td>Dell Inspiron 9100</td></tr>
-                           <tr><td><b>From (Room) </b></td><td>MC149A</td></tr>
-                           <tr><td><b>Previous Owner </b></td><td>Jon Knight</td></tr>
-                           <tr><td><b>Dept. From </b></td><td>CITC</td></tr>
-                           <tr><td><b>To (Room) </b></td><td>MC253</td></tr>
-                          <tr><td><b>New Owner </b></td><td>Jon Knight</td></tr>
-                           <tr><td><b>Dept. To </b></td><td>CITC</td></tr>
-                       </table>
-
-                       <p><b>Notes: </b>This is only a test transfer.</p>
-                       <button class="btn btn-danger delete-btn">Remove</button>
-                       <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#Edit_Modal1">Edit</button>
-                   </div>
-               </div>
-               </div>
-              -->
           </div>
         </div>
-		
+
 		<!-- Add Modal start -->
         <div id="Add_Modal" class="modal fade" role="dialog">
           <div class="modal-dialog">
@@ -113,10 +79,10 @@
 						<?php
 							$query= "SELECT DISTINCT Location FROM [Complete Active inventory list 52914];";
 							$options = queryDB($con1, $query);
-							
-							foreach($options as $row) 
+
+							foreach($options as $row)
 							{
-								foreach($row as $value) 
+								foreach($row as $value)
 								{
 									echo "<option>" . $value . "</option>";
 								}
@@ -131,10 +97,10 @@
 						<?php
 							$query= "SELECT DISTINCT Custodian FROM [Complete Active inventory list 52914];";
 							$options = queryDB($con1, $query);
-							
-							foreach($options as $row) 
+
+							foreach($options as $row)
 							{
-								foreach($row as $value) 
+								foreach($row as $value)
 								{
 									echo "<option>" . $value . "</option>";
 								}
@@ -149,9 +115,9 @@
 						<?php
 							$query= "SELECT DISTINCT DeptTo FROM tblTransTemp_072017;";
 							$options = queryDB($con1, $query);
-							
-							foreach($options as $row) 
-								foreach($row as $value) 
+
+							foreach($options as $row)
+								foreach($row as $value)
 									echo "<option>" . $value . "</option>";
 						?>
                     </select>
@@ -159,9 +125,7 @@
 
                 <div class="form-group">
                     <h4>Notes</h4>
-                    <textarea class="form-control" id="notes" name="notes">
-
-                    </textarea>
+                    <textarea class="form-control" id="notes" name="notes"></textarea>
                 </div>
 
                 <div class="form-group" style="text-align: left; margin: 0 auto;">
@@ -185,7 +149,7 @@
 
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="submit()">Save Changes</button>
+                <button type="button" class="btn btn-success" onclick="submit()">Save Changes</button>
               </div>
             </div>
 

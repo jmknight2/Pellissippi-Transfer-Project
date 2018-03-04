@@ -1,10 +1,11 @@
-// Written by: Jon Knight
-// Date last modified: 2/12/18
-// Dependencies: mobile.html
+// Written by: Jon Knight (Ben Millsaps [Ajax])
+// Date last modified: 3/2/18
+// Dependencies: mobile.php
 
 var transfersArray = [];
 var selectedTransferID;
 
+// * Clears the screen of all panels, and adds a panel for each object in the array.
 function refreshList()
 {           
     $('.mobile .panel').remove();
@@ -53,6 +54,9 @@ function refreshList()
             });
 }
 
+// * Called when the delete button is clicked.
+//
+// * Removes selected object from the array, and refreshes the list.
 function deleteTransfer(button)
 {
     var index = $(button).closest('.panel-collapse').attr('id');
@@ -60,6 +64,9 @@ function deleteTransfer(button)
     $(button).closest('.panel').remove();
 }
 
+// * Called when user presses the edit button. 
+//
+// * Stores the index of the object in a global variable.
 function setSelectedID(button)
 {
     selectedTransferID = parseInt($(button).closest('.panel-collapse').attr('id'));
@@ -77,6 +84,9 @@ function setSelectedID(button)
     $('#pre_dept').val(transfersArray[selectedTransferID].preDept);
 }
 
+// * Stringifies the object array in JSON format.
+//
+// * Still in progress
 function submitFinal()
 {
     transfersArray.forEach(function(element, index){
@@ -87,6 +97,7 @@ function submitFinal()
     console.log(myJsonString);
 }
 
+// * Determines if the user is trying to edit a transfer, or create a new one.
 function submit()
 {
     if(selectedTransferID === undefined)
@@ -99,34 +110,42 @@ function submit()
     }
 }
 
+// * Called when a transfer is to be edited.
+//
+// * Doesn't alter object unless there are no errors in the modal.
+//
+// * Refreshes the list when the object's fields have been altered in the array.
 function submitEdit()
 {
     if($('#IDAdd').val() != '')
     {
-        //Add an additional check here to make sure the ID is valid
-        //Do this by making sure the fields populated by the database aren't empty.
-        
-        if($('#newRoom').val() != null && $('#newOwner').val() != null && $('#newDept').val() != null)
-        {                        
-            transfersArray[selectedTransferID].itemID = $('#IDAdd').val();
-            transfersArray[selectedTransferID].newRoom = $('#newRoom').val();
-            transfersArray[selectedTransferID].newOwner = $('#newOwner').val();
-            transfersArray[selectedTransferID].newDept = $('#newDept').val();
-            transfersArray[selectedTransferID].notes = $('#notes').val();
-            transfersArray[selectedTransferID].model = $('#model').val();
-            transfersArray[selectedTransferID].preRoom = $('#pre_room').val();
-            transfersArray[selectedTransferID].preOwner = $('#pre_owner').val();
-            transfersArray[selectedTransferID].preDept = $('#pre_dept').val();
-            
-            refreshList();
-            
-            selectedTransferID = undefined;
-            
-            console.log(JSON.stringify(transfersArray));
+        if($('#model').val() != '' && $('#pre_room').val() != '' && $('#pre_owner').val() != '' && $('#pre_dept').val() != '')
+        {
+            if($('#newRoom').val() != null && $('#newOwner').val() != null && $('#newDept').val() != null)
+            {                        
+                transfersArray[selectedTransferID].itemID = $('#IDAdd').val();
+                transfersArray[selectedTransferID].newRoom = $('#newRoom').val();
+                transfersArray[selectedTransferID].newOwner = $('#newOwner').val();
+                transfersArray[selectedTransferID].newDept = $('#newDept').val();
+                transfersArray[selectedTransferID].notes = $('#notes').val();
+                transfersArray[selectedTransferID].model = $('#model').val();
+                transfersArray[selectedTransferID].preRoom = $('#pre_room').val();
+                transfersArray[selectedTransferID].preOwner = $('#pre_owner').val();
+                transfersArray[selectedTransferID].preDept = $('#pre_dept').val();
+
+                refreshList();
+
+                $('#Add_Modal').modal('hide');
+                selectedTransferID = undefined;
+            }
+            else
+            {
+                alert("Please ensure you've comppleted all required fields.");
+            }
         }
         else
         {
-            alert("Please ensure you've comppleted all required fields.");
+            alert("Please ensure you've entered a valid ID");
         }
     }
     else
@@ -135,36 +154,46 @@ function submitEdit()
     }
 }
 
+// * Called when a new transfer is added to the object array.
+//
+// * Doesn't create object unless there are no errors in the modal.
+//
+// * Refreshes the list when the new object is added to the array.
 function submitNew()
 {
     if($('#IDAdd').val() != '')
     {
-        //Add an additional check here to make sure the ID is valid
-        //Do this by making sure the fields populated by the database aren't empty.
-        
-        if($('#newRoom').val() != null && $('#newOwner').val() != null && $('#newDept').val() != null)
+        if($('#model').val() != '' && $('#pre_room').val() != '' && $('#pre_owner').val() != '' && $('#pre_dept').val() != '')
         {
-            var transfer = {
-                itemID:$('#IDAdd').val(),
-                newRoom:$('#newRoom').val(),
-                newOwner:$('#newOwner').val(),
-                newDept:$('#newDept').val(),
-                notes:$('#notes').val(),
-                model:$('#model').val(),
-                preRoom:$('#pre_room').val(),
-                preOwner:$('#pre_owner').val(),
-                preDept:$('#pre_dept').val(),
-                custodian:undefined
-            };
-            
-            console.log(JSON.stringify(transfer));
-            transfersArray.push(transfer);
-            
-            refreshList();
+        
+            if($('#newRoom').val() != null && $('#newOwner').val() != null && $('#newDept').val() != null)
+            {
+                var transfer = {
+                    itemID:$('#IDAdd').val(),
+                    newRoom:$('#newRoom').val(),
+                    newOwner:$('#newOwner').val(),
+                    newDept:$('#newDept').val(),
+                    notes:$('#notes').val(),
+                    model:$('#model').val(),
+                    preRoom:$('#pre_room').val(),
+                    preOwner:$('#pre_owner').val(),
+                    preDept:$('#pre_dept').val(),
+                    custodian:undefined
+                };
+
+                transfersArray.push(transfer);    
+                refreshList();
+
+                $('#Add_Modal').modal('hide');
+            }
+            else
+            {
+                alert("Please ensure you've completed all required fields");
+            }
         }
         else
         {
-            alert("Please ensure you've completed all required fields.");
+            alert("Please ensure you've entered a valid ID");
         }
     }
     else
@@ -173,7 +202,13 @@ function submitNew()
     }
 }
 
+// * Registers a handler for the modal close event.
+//
+// * Clears all fields on modal close.
 $('#Add_Modal').on('hidden.bs.modal', function () {
+    
+    $('#IDAdd').removeClass('error');
+    $('#IDAdd').removeClass('success');
     
     $('#IDAdd').val('');
     $('#newRoom').selectpicker('val', 'none');
@@ -184,29 +219,30 @@ $('#Add_Modal').on('hidden.bs.modal', function () {
     $('#pre_room').val('');
     $('#pre_owner').val('');
     $('#pre_dept').val('');
-})
+});
 
+// * Takes the value in the ID field, searches the database for the associated info via Ajax,
+//   and returns the results to the appropriate fields.
+//
+// * Changes the color of the text field upon either success or error.
 function getInfoFromTag(str) 
 {
-	
-	//window.alert(str.length);
-	
 	if (str.length < 6 || str.length > 6) 
 	{
-		if($('#IDAdd').hasClass('has-success'))
+		if($('#IDAdd').hasClass('success'))
         {
-            $('#IDAdd').removeClass('has-success');
-            $('#IDAdd').addClass('has-error');
+            $('#IDAdd').removeClass('success');
+            $('#IDAdd').addClass('error');
         }
         else
         {
-            $('#IDAdd').addClass('has-error');
+            $('#IDAdd').addClass('error');
         }
         
-		document.getElementById("model").value = "";
-		document.getElementById("pre_room").value = "";
-		document.getElementById("pre_owner").value = "";
-		document.getElementById("pre_dept").value = "";
+		$("#model").value = "";
+		$("#pre_room").value = "";
+		$("#pre_owner").value = "";
+		$("#pre_dept").value = "";
 		return;
 	} 
 	
@@ -226,12 +262,12 @@ function getInfoFromTag(str)
                     
                     if($('#IDAdd').hasClass('has-error'))
                     {
-                        $('#IDAdd').removeClass('has-error');
-                        $('#IDAdd').addClass('has-success');
+                        $('#IDAdd').removeClass('error');
+                        $('#IDAdd').addClass('success');
                     }
                     else
                     {
-                        $('#IDAdd').addClass('has-success');
+                        $('#IDAdd').addClass('success');
                     }
                     
 					document.getElementById("model").value = resultsArr[0];
