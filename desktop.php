@@ -4,13 +4,20 @@
   -->
   
 <?php
+    session_start();
 	include("phpFunctions.php");
 	$con1 = connectToDB();
+
+    if(!$_SESSION['auth'])
+    {
+        header('Location: index.php');
+        die();
+    }
 ?>
 
 <html lang="en">
     <head>
-        <title>UI Demo 4</title>
+        <title>PSTCC Transfer</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -39,7 +46,7 @@
                 
                 <li><button data-toggle="modal" data-target="#Add_Modal" class="btn btn-block" style="color: white; background-color: #FCD955" >Add Item</button></li>
                 <li class="active"><button class="btn btn-success btn-block" onclick="submitFinal()">Submit Transfer</button></li>
-                <li><button class="btn btn-danger btn-block" style="">Clear Items</button></li>
+                <li><button class="btn btn-danger btn-block" onclick="window.location.href='logout.php'">Logout</button></li>
             </ul>
           </div>
         </nav>
@@ -59,53 +66,7 @@
                     <th>Notes</th>
                     <th></th>
                 </thead>
-                <tbody class="content-area">
-                
-                    
-                    <!--
-                      -- The following commented <tr> is template layout for every row in the table. Every row sholud be laid out this way.
-                      -->
-                    
-                    <!--
-                    <tr>
-                        <td>
-                            <input class="form-control" style="max-width: 100px;" name="model" placeholder="Please enter/scan ID" value="1004">
-                        </td>
-                        <td>Dell Optiplex 980</td>
-                        <td>MC329</td>
-                        <td>Jon Knight</td>
-                        <td>CITC</td>
-                        <td>
-                            <select class="form-control selectpicker" style="min-width: 0px;" data-show-subtext="true" data-live-search="true">
-                                <option>MC235</option>
-                                <option>MC236</option>
-                                <option>MC237</option>
-                                <option>DV205</option>
-                                <option>DV206</option>
-                                <option>DV207</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
-                                <option>Jon Knight</option>
-                                <option>Jacob Simms</option>
-                                <option>Zachary Mitchell</option>
-                                <option>Ben Millsaps</option>
-                                <option>Matthew Ratliff</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
-                                <option>CITC</option>
-                                <option>BUSN</option>
-                                <option>CHEM</option>
-                            </select>
-                        </td>
-                        <td>Notes...</td>
-                        <td><button class="btn btn-danger btn-sm delete-btn"><span class="glyphicon glyphicon-trash"></span></button></td>
-                    </tr>
-                    -->
-                    
+                <tbody class="content-area">            
                     
                 </tbody>
             </table>    
@@ -120,7 +81,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">New Transfer</h4>
+                <h4 class="modal-title">Transfer Details</h4>
               </div>
               <div class="modal-body container-fluid">
                   
@@ -200,22 +161,22 @@
                 <div class="col-sm-6">  
                     <div class="form-group" style="text-align: left; margin: 0 auto;">
                         <h4>Model</h4>
-                        <input class="form-control" id="model" name="model" value=" " readonly>
+                        <input class="form-control" id="model" name="model" readonly>
                     </div>
                     <div class="form-group" style="text-align: left; margin: 0 auto;">
                         <h4>Previous Room</h4>
-                        <input class="form-control" id="pre_room" name="pre_room" value=" " readonly>
+                        <input class="form-control" id="pre_room" name="pre_room" readonly>
                     </div>
                 </div>
                     
                 <div class="col-sm-6">  
                     <div class="form-group" style="text-align: left; margin: 0 auto;">
                         <h4>Previous Owner</h4>
-                        <input class="form-control" id="pre_owner" name="pre_owner" value=" " readonly>
+                        <input class="form-control" id="pre_owner" name="pre_owner" readonly>
                     </div>
                     <div class="form-group" style="text-align: left; margin: 0 auto;">
                         <h4>Previous Department</h4>
-                        <input class="form-control" id="pre_dept" name="pre_dept" value=" " readonly>
+                        <input class="form-control" id="pre_dept" name="pre_dept" readonly>
                     </div>
                 </div>    
                 
@@ -224,120 +185,13 @@
                   
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" onclick="submitNew();">Save Changes</button>
+                <button type="button" class="btn btn-success" onclick="submit();">Save Changes</button>
               </div>
             </div>
 
           </div>
         </div>
         <!-- Add Modal end -->
-        
-        <!-- Edit Modal start -->
-        <div id="Edit_Modal1" class="modal fade" role="dialog">
-          <div class="modal-dialog">
-
-            <!-- Edit Modal content start-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Edit Transfer</h4>
-                <h4 class="modal-title">Edit Transfer</h4>
-              </div>
-              <div class="modal-body">
-                <form class="form" action="#">
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>PSCC ID#</h4>
-                    <div class="input-group">
-                        <input class="form-control" name="ID" id="IDAdd" placeholder="Please enter/scan ID" value="">
-                        <span class="barcode input-group-addon" onclick="scan(IDAdd)"><span class="glyphicon glyphicon-barcode"></span></span>
-                    </div>
-                </div>
-				
-
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>New Room</h4>
-                    <select id="newRoomEdit" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
-						<?php
-							$query= "SELECT DISTINCT Location FROM [Complete Active inventory list 52914];";
-							$options = queryDB($con1, $query);
-							
-							foreach($options as $row) 
-							{
-								foreach($row as $value) 
-								{
-									echo "<option>" . $value . "</option>";
-								}
-							}
-						?>
-                    </select>
-                </div>
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>New Owner</h4>
-                    <select id="newOwnerEdit" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
-						<?php
-							$query= "SELECT DISTINCT [NAME] FROM dbo_tblCustodians;";
-							$options = queryDB($con1, $query);
-							
-							foreach($options as $row) 
-							{
-								foreach($row as $value) 
-								{
-									echo "<option>" . $value . "</option>";
-								}
-							}
-						?>
-                    </select>
-                </div>
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>New Department</h4>
-                    <select id="newDeptEdit" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
-						<?php
-							$query= "SELECT DISTINCT DeptTo FROM tblTransTemp_072017;";
-							$options = queryDB($con1, $query);
-							
-							foreach($options as $row) 
-								foreach($row as $value) 
-									echo "<option>" . $value . "</option>";
-						?>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <h4>Notes</h4>
-                    <textarea id="notesEdit" class="form-control" name="notes"></textarea>
-                </div>
-
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>Model</h4>
-                    <input id="modelEdit" class="form-control" name="model" value="" readonly>
-                </div>
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>Previous Room</h4>
-                    <input id="preRoomEdit" class="form-control" name="pre_room" value="" readonly>
-                </div>
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>Previous Owner</h4>
-                    <input id="preOwnerEdit" class="form-control" name="pre_owner" value="" readonly>
-                </div>
-                <div class="form-group" style="text-align: left; margin: 0 auto;">
-                    <h4>Previous Department</h4>
-                    <input id="preDeptEdit" class="form-control" name="pre_dept" value="" readonly>
-                </div>
-
-              </form>
-
-              </div>
-              <!-- Edit Modal content end -->
-
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="submitEdit()">Save Changes</button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-        <!-- Edit Modal end -->
         
         <script src="manipulate_transfers_desktop.js"></script>
     </body>

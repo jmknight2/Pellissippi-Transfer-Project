@@ -22,9 +22,7 @@ function refreshList()
     var newRoom = element.newRoom;
     var newOwner = element.newOwner;
     var newDept = element.newDept;
-
     var notes = element.notes;
-
     var model = element.model;
     var preRoom = element.preRoom;
     var preOwner = element.preOwner;
@@ -32,19 +30,17 @@ function refreshList()
 
     var html =
     `<tr id="`+ index +`">
-     <td>`+ itemID +`</td>
-     <td>`+ model +`</td>
-     <td>`+ preRoom +`</td>
-     <td>`+ preOwner +`</td>
-     <td>`+ preDept +`</td>
-     <td>`+ newRoom +`</td>
-     <td>`+ newOwner +`</td>
-     <td>`+ newDept +`</td>
-
+        <td>`+ itemID +`</td>
+        <td>`+ model +`</td>
+        <td>`+ preRoom +`</td>
+        <td>`+ preOwner +`</td>
+        <td>`+ preDept +`</td>
+        <td>`+ newRoom +`</td>
+        <td>`+ newOwner +`</td>
+        <td>`+ newDept +`</td>
         <td>`+ notes.substr(0, 25) +`</td>
-
         <td>
-            <button data-toggle="modal" data-target="#Edit_Modal" class="btn btn-primary btn-sm" onclick="setSelectedID(this)">Edit</button>
+            <button data-toggle="modal" data-target="#Add_Modal" class="btn btn-primary btn-sm" onclick="setSelectedID(this)">Edit</button>
         </td>
         <td>
             <button class="btn btn-danger btn-md" onclick="deleteTransfer(this)"><span class="glyphicon glyphicon-trash"></span></button>
@@ -53,9 +49,6 @@ function refreshList()
     var newElement = $.parseHTML(html);
 
     $('.content-area').append(newElement);
-
-    // Guessing this is for testing?
-    console.log('Array size: ' + transfersArray.length);
   });
 }
 
@@ -76,18 +69,15 @@ function setSelectedID(button)
 {
     selectedTransferID = parseInt($(button).closest('tr').attr('id'));
 
-    console.log("Selected ID: " + selectedTransferID);
-    console.log("Selected itemID" + transfersArray[selectedTransferID].itemID)
-
-    $('#IDEdit').val(transfersArray[selectedTransferID].itemID);
-    $('#newRoomEdit').selectpicker('val', transfersArray[selectedTransferID].newRoom);
-    $('#newOwnerEdit').selectpicker('val', transfersArray[selectedTransferID].newOwner);
-    $('#newDeptEdit').selectpicker('val', transfersArray[selectedTransferID].newDept);
-    $('#notesEdit').val(transfersArray[selectedTransferID].notes);
-    $('#modelEdit').val(transfersArray[selectedTransferID].model);
-    $('#preRoomEdit').val(transfersArray[selectedTransferID].preRoom);
-    $('#preOwnerEdit').val(transfersArray[selectedTransferID].preOwner);
-    $('#preDeptEdit').val(transfersArray[selectedTransferID].preDept);
+    $('#IDAdd').val(transfersArray[selectedTransferID].itemID);
+    $('#newRoom').selectpicker('val', transfersArray[selectedTransferID].newRoom);
+    $('#newOwner').selectpicker('val', transfersArray[selectedTransferID].newOwner);
+    $('#newDept').selectpicker('val', transfersArray[selectedTransferID].newDept);
+    $('#notes').val(transfersArray[selectedTransferID].notes);
+    $('#model').val(transfersArray[selectedTransferID].model);
+    $('#pre_room').val(transfersArray[selectedTransferID].preRoom);
+    $('#pre_owner').val(transfersArray[selectedTransferID].preOwner);
+    $('#pre_dept').val(transfersArray[selectedTransferID].preDept);
 }
 
 // * Stringifies the object array in JSON format.
@@ -134,25 +124,25 @@ function submitEdit()
 {
 
   // Remove "edit" from all of these if we manage to get it working with one modal.
-  if($('#IDEdit').val() != '')
+  if($('#IDAdd').val() != '')
   {
-      if($('#modelEdit').val() != '' && $('#preRoomEdit').val() != '' && $('#preOwnerEdit').val() != '' && $('#preDeptEdit').val() != '')
+      if($('#model').val() != '' && $('#pre_room').val() != '' && $('#pre_owner').val() != '' && $('#pre_dept').val() != '')
       {
-          if($('#newRoomEdit').val() != null && $('#newOwnerEdit').val() != null && $('#newDeptEdit').val() != null)
+          if($('#newRoom').val() != null && $('#newOwner').val() != null && $('#newDept').val() != null)
           {
-              transfersArray[selectedTransferID].itemID = $('#IDEdit').val();
-              transfersArray[selectedTransferID].newRoom = $('#newRoomEdit').val();
-              transfersArray[selectedTransferID].newOwner = $('#newOwnerEdit').val();
-              transfersArray[selectedTransferID].newDept = $('#newDeptEdit').val();
-              transfersArray[selectedTransferID].notes = $('#notesEdit').val();
-              transfersArray[selectedTransferID].model = $('#modelEdit').val();
-              transfersArray[selectedTransferID].preRoom = $('#preRoomEdit').val();
-              transfersArray[selectedTransferID].preOwner = $('#preOwnerEdit').val();
-              transfersArray[selectedTransferID].preDept = $('#preDeptEdit').val();
+              transfersArray[selectedTransferID].itemID = $('#IDAdd').val();
+              transfersArray[selectedTransferID].newRoom = $('#newRoom').val();
+              transfersArray[selectedTransferID].newOwner = $('#newOwner').val();
+              transfersArray[selectedTransferID].newDept = $('#newDept').val();
+              transfersArray[selectedTransferID].notes = $('#notes').val();
+              transfersArray[selectedTransferID].model = $('#model').val();
+              transfersArray[selectedTransferID].preRoom = $('#pre_room').val();
+              transfersArray[selectedTransferID].preOwner = $('#pre_owner').val();
+              transfersArray[selectedTransferID].preDept = $('#pre_dept').val();
 
               refreshList();
 
-              $('#Edit_Modal').modal('hide');
+              $('#Add_Modal').modal('hide');
               selectedTransferID = undefined;
           }
           else
@@ -222,20 +212,20 @@ function submitNew()
 // * Registers a handler for the modal close event.
 //
 // * Clears all fields on modal close.
-// $('#Add_Modal').on('hidden.bs.modal', function () {
-//   $('#IDAdd').removeClass('error');
-//   $('#IDAdd').removeClass('success');
-//
-//   $('#IDAdd').val('');
-//   // $('#newRoom').selectpicker('val', 'none');
-//   // $('#newOwner').selectpicker('val', 'none');
-//   // $('#newDept').selectpicker('val', 'none');
-//   $('#notes').val('');
-//   $('#model').val('');
-//   $('#pre_room').val('');
-//   $('#pre_owner').val('');
-//   $('#pre_dept').val('');
-// });
+ $('#Add_Modal').on('hidden.bs.modal', function () {
+   $('#IDAdd').removeClass('error');
+   $('#IDAdd').removeClass('success');
+
+   $('#IDAdd').val('');
+   $('#newRoom').selectpicker('val', 'none');
+   $('#newOwner').selectpicker('val', 'none');
+   $('#newDept').selectpicker('val', 'none');
+   $('#notes').val('');
+   $('#model').val('');
+   $('#pre_room').val('');
+   $('#pre_owner').val('');
+   $('#pre_dept').val('');
+ });
 
 // * Takes the value in the ID field, searches the database for the associated info via Ajax,
 //   and returns the results to the appropriate fields.
