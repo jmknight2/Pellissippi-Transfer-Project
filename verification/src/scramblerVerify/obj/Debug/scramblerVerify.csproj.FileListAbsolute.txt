@@ -1,0 +1,7 @@
+C:\Users\Zacha\Documents\Code\csharp\commandLine\scramblerVerify\scramblerVerify\bin\Debug\scramblerVerify.exe.config
+C:\Users\Zacha\Documents\Code\csharp\commandLine\scramblerVerify\scramblerVerify\bin\Debug\scramblerVerify.exe
+C:\Users\Zacha\Documents\Code\csharp\commandLine\scramblerVerify\scramblerVerify\bin\Debug\scramblerVerify.pdb
+C:\Users\Zacha\Documents\Code\csharp\commandLine\scramblerVerify\scramblerVerify\obj\Debug\scramblerVerify.csprojResolveAssemblyReference.cache
+C:\Users\Zacha\Documents\Code\csharp\commandLine\scramblerVerify\scramblerVerify\obj\Debug\scramblerVerify.csproj.CoreCompileInputs.cache
+C:\Users\Zacha\Documents\Code\csharp\commandLine\scramblerVerify\scramblerVerify\obj\Debug\scramblerVerify.exe
+C:\Users\Zacha\Documents\Code\csharp\commandLine\scramblerVerify\scramblerVerify\obj\Debug\scramblerVerify.pdb
