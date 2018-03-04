@@ -1,18 +1,5 @@
 <?php
-
-function connectToDB()
-{
-	//make odbc connection to MSaccess DB
-	$con = odbc_connect("PPDB", "", "");
-
-	if(!($con))
-	{
-		echo "Failed to connect to Access DB<br/><br/>";
-		return false;
-	}
-	
-	else return $con;
-}
+include 'db_connection.php';
 
 function queryDB($con, $query)
 {	

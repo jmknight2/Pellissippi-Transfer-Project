@@ -156,7 +156,7 @@
                         <select class="form-control selectpicker" id="newOwner" data-show-subtext="true" data-live-search="true">
                             <option disabled selected value="none">Please choose room...</option>
 						<?php
-							$query= "SELECT DISTINCT Custodian FROM [Complete Active inventory list 52914];";
+							$query= "SELECT DISTINCT [NAME] FROM dbo_tblCustodians;";
 							$options = queryDB($con1, $query);
 							
 							foreach($options as $row) 
@@ -275,7 +275,7 @@
                     <h4>New Owner</h4>
                     <select id="newOwnerEdit" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
 						<?php
-							$query= "SELECT DISTINCT Custodian FROM [Complete Active inventory list 52914];";
+							$query= "SELECT DISTINCT [NAME] FROM dbo_tblCustodians;";
 							$options = queryDB($con1, $query);
 							
 							foreach($options as $row) 

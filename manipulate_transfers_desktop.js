@@ -96,7 +96,16 @@ function deleteTransfer(button)
 function submitFinal()
 {
     var myJsonString = JSON.stringify(transfersArray);
-    console.log(myJsonString);
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            alert(this.responseText);
+        }/* else {
+           console.log("ERROR: " + this.readyState + this.status + this.statusText + this.responseText);
+        }*/
+    };
+    xmlhttp.open("GET", "addTransfers.php?json=" + myJsonString, true);
+    xmlhttp.send(null);
 }
 
 function submitNew()
