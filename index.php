@@ -45,13 +45,13 @@
     #login-panel
     {
       margin: 0 auto;
-      margin-top: 14%;
+      margin-top: 20%;
       text-align: center;
       background-color: #0066cc;
       padding: 10px 60px 20px 60px;
       border-radius: 30px;
       border: 2px solid #fcd955;
-      width: 50%;
+      width: 60%;
     }
 
     @media screen and (max-width: 768px) {
@@ -94,24 +94,36 @@
           <h1>Transfer Application</h1>
 
               <?php
-                    if (isset($_POST["submit"]))
-                    {
-                        if($_POST["pwd"] == '')
-                        {
-                            $_SESSION['auth'] = false;
-                            echo "<script>alert('Password cannot be blank.');</script>";
-                        }
-						else if(exec('cd verification && scramblerVerify.exe '.$_POST["pwd"].' -f nothingInteresting.txt') == 'True')
-                        {
-                            $_SESSION['auth'] = true;
-                        }
-                        else
-                        {
-                            $_SESSION['auth'] = false;
-                            echo "<script>alert('Password incorrect.');</script>";
-                        }
+                if (isset($_POST["submit"]))
+                {
+                  //Due to the password being passed as an excutable argument, it needs to be checked for spaces so nothing can go haywire on the other side:
+                  $passHasSpaces = false;
+                  for($i=0;$i<strlen($_POST['pwd']);$i++){
+                    if($_POST['pwd'][$i] == ' '){
+                      $passHasSpaces = true;
+                      break;
                     }
-                ?>
+                  }
+                    if($_POST["pwd"] == '')
+                    {
+                        $_SESSION['auth'] = false;
+                        echo "<script>alert('Password cannot be blank.');</script>";
+                    }
+                    else if ($passHasSpaces){
+                      $_SESSION['auth'] = false;
+                      echo "<script>alert('Password cannot contain spaces.');</script>";
+                    }
+                    else if(exec('cd verification && scramblerVerify.exe '.$_POST["pwd"].' -f nothingInteresting.txt') == 'True')
+                    {
+                        $_SESSION['auth'] = true;
+                    }
+                    else
+                    {
+                        $_SESSION['auth'] = false;
+                        echo "<script>alert('Password incorrect.');</script>";
+                    }
+                }
+              ?>
 
           <form method="post">
             <div class="form-group">

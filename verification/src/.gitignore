@@ -1,0 +1,7 @@
+#We don't really need an extra copy of the binaries:
+scramblerVerify/obj/
+scramblerVerify/bin/
+
+#nor do we need these dodads:
+.vs/
+../.vs/

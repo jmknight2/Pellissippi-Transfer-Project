@@ -1,6 +1,0 @@
-C:\Users\Zacha\Documents\Code\csharp\commandLine\scramblerVerify\scramblerVerify\bin\Release\scramblerVerify.exe.config
-C:\Users\Zacha\Documents\Code\csharp\commandLine\scramblerVerify\scramblerVerify\bin\Release\scramblerVerify.exe
-C:\Users\Zacha\Documents\Code\csharp\commandLine\scramblerVerify\scramblerVerify\bin\Release\scramblerVerify.pdb
-C:\Users\Zacha\Documents\Code\csharp\commandLine\scramblerVerify\scramblerVerify\obj\Release\scramblerVerify.csproj.CoreCompileInputs.cache
-C:\Users\Zacha\Documents\Code\csharp\commandLine\scramblerVerify\scramblerVerify\obj\Release\scramblerVerify.exe
-C:\Users\Zacha\Documents\Code\csharp\commandLine\scramblerVerify\scramblerVerify\obj\Release\scramblerVerify.pdb
