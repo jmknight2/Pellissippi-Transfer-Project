@@ -1,0 +1,12 @@
+C:\Users\Zacha\Documents\Code\csharp\windowsForms\cliEmailConfig\cliEmailConfig\bin\Release\cliEmailConfig.exe.config
+C:\Users\Zacha\Documents\Code\csharp\windowsForms\cliEmailConfig\cliEmailConfig\bin\Release\cliEmailConfig.exe
+C:\Users\Zacha\Documents\Code\csharp\windowsForms\cliEmailConfig\cliEmailConfig\bin\Release\cliEmailConfig.pdb
+C:\Users\Zacha\Documents\Code\csharp\windowsForms\cliEmailConfig\cliEmailConfig\obj\Release\cliEmailConfig.csprojResolveAssemblyReference.cache
+C:\Users\Zacha\Documents\Code\csharp\windowsForms\cliEmailConfig\cliEmailConfig\obj\Release\cliEmailConfig.changePassword.resources
+C:\Users\Zacha\Documents\Code\csharp\windowsForms\cliEmailConfig\cliEmailConfig\obj\Release\cliEmailConfig.editContact.resources
+C:\Users\Zacha\Documents\Code\csharp\windowsForms\cliEmailConfig\cliEmailConfig\obj\Release\cliEmailConfig.startPage.resources
+C:\Users\Zacha\Documents\Code\csharp\windowsForms\cliEmailConfig\cliEmailConfig\obj\Release\cliEmailConfig.Properties.Resources.resources
+C:\Users\Zacha\Documents\Code\csharp\windowsForms\cliEmailConfig\cliEmailConfig\obj\Release\cliEmailConfig.csproj.GenerateResource.Cache
+C:\Users\Zacha\Documents\Code\csharp\windowsForms\cliEmailConfig\cliEmailConfig\obj\Release\cliEmailConfig.csproj.CoreCompileInputs.cache
+C:\Users\Zacha\Documents\Code\csharp\windowsForms\cliEmailConfig\cliEmailConfig\obj\Release\cliEmailConfig.exe
+C:\Users\Zacha\Documents\Code\csharp\windowsForms\cliEmailConfig\cliEmailConfig\obj\Release\cliEmailConfig.pdb
