@@ -4,15 +4,15 @@
   -->
 
 <!-- <?php
-  //   session_start();
-	// include("phpFunctions.php");
-	// $con1 = connectToDB();
-  //
-  //   if(!$_SESSION['auth'])
-  //   {
-  //       header('Location: index.php');
-  //       die();
-  //   }
+     session_start();
+	 include("phpFunctions.php");
+	 $con1 = connectToDB();
+  
+     if(!$_SESSION['auth'])
+     {
+         header('Location: index.php');
+         die();
+     }
 ?> -->
 
 <html lang="en">

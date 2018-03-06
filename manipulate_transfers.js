@@ -109,17 +109,20 @@ function refreshListMobile()
 
 function deleteTransfer(button)
 {
-    if(filename === "desktop.php")
+    if(confirm('Permanently delete this transfer?'))
     {
-        var index = $(button).closest('tr').attr('id');
-        transfersArray.splice(index, 1);
-        $(button).closest('tr').remove();
-    }
-    else
-    {
-        var index = $(button).closest('.panel-collapse').attr('id');
-        transfersArray.splice(index, 1);
-        $(button).closest('.panel').remove();
+        if(filename === "desktop.php")
+        {
+            var index = $(button).closest('tr').attr('id');
+            transfersArray.splice(index, 1);
+            $(button).closest('tr').remove();
+        }
+        else
+        {
+            var index = $(button).closest('.panel-collapse').attr('id');
+            transfersArray.splice(index, 1);
+            $(button).closest('.panel').remove();
+        }
     }
 }
 
