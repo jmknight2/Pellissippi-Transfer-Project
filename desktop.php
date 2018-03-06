@@ -2,18 +2,17 @@
   -- Date last modified: 2/2/2018
   -- Dependices: Stylesheet = "desktop.css"
   -->
+<?php
+    session_start();
+	include("phpFunctions.php");
+	$con1 = connectToDB();
 
-<!-- <?php
-     session_start();
-	 include("phpFunctions.php");
-	 $con1 = connectToDB();
-  
-     if(!$_SESSION['auth'])
-     {
-         header('Location: index.php');
-         die();
-     }
-?> -->
+    if(!$_SESSION['auth'])
+    {
+        header('Location: index.php');
+        die();
+    }
+?>
 
 <html lang="en">
     <head>
