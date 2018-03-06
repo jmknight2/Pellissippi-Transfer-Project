@@ -3,17 +3,17 @@
   -- Dependices: Stylesheet = "desktop.css"
   -->
 
-<!-- <?php
-  //   session_start();
-	// include("phpFunctions.php");
-	// $con1 = connectToDB();
-  //
-  //   if(!$_SESSION['auth'])
-  //   {
-  //       header('Location: index.php');
-  //       die();
-  //   }
-?> -->
+<?php
+    session_start();
+	include("phpFunctions.php");
+	$con1 = connectToDB();
+
+    if(!$_SESSION['auth'])
+    {
+        header('Location: index.php');
+        die();
+    }
+?>
 
 <html lang="en">
     <head>
