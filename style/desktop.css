@@ -7,11 +7,13 @@
  ****
  * Dependencies: Stylesheet for "desktop.PHP".
  */
+ body {
+   background-color: white;
+ }
 
 tr:hover >td {
   filter: drop-shadow(3px 3px 5px rgba(0,0,0,.35));
 }
-
 td
 {
   font-size: 14px;
@@ -30,9 +32,9 @@ td
 .navbar
 {
   background-color: #0066cc;
-  border-style: solid medium #fcd955;
-  //border-bottom-left-radius: 30px;
-  //border-bottom-right-radius: 30px;
+  border-bottom: solid medium #fcd955;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
 }
 
 .navbar-nav > li
