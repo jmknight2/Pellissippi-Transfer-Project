@@ -43,7 +43,7 @@
     #login-panel
     {
       margin: 0 auto;
-      margin-top: 20%;
+      margin-top: 14%;
       text-align: center;
       background-color: #0066cc;
       padding: 10px 60px 20px 60px;
