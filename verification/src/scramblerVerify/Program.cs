@@ -22,6 +22,7 @@ namespace scramblerVerify
         {
             bool encrypt = false;
             bool useFile = false;
+            bool removeWord = false;
             string saveLocation = "";
 
             bool gotFirstWord = false;
@@ -37,8 +38,17 @@ namespace scramblerVerify
                         encrypt = true;
                         break;
                     case "-f":
-                        useFile = true;
-                        saveLocation = args[i + 1];
+                        try {
+                            saveLocation = args[i + 1];
+                            useFile = true;
+                        }
+                        catch (IndexOutOfRangeException)
+                        {
+                            Console.WriteLine("Error: No option given for the source file! Proceeding without an external file...");
+                        }
+                        break;
+                    case "-r":
+                        removeWord = true;
                         break;
                     default:
                         if (args[i] != saveLocation)
@@ -53,13 +63,19 @@ namespace scramblerVerify
                         break;
                 }
             }
-            if (encrypt)
+            if (removeWord)
+            {
+                //Guessing this should be removed as well:
+                wordList.Add(compare);
+                remove(saveLocation,test,wordList.ToArray());
+            }
+            else if (encrypt)
             {
                 wordList.Add(compare);
 
                 if (useFile)
                 {
-                    save(saveLocation, test, wordList.ToArray());
+                    save(saveLocation, test, wordList.ToArray(),true);
                 }
                 else
                 {
@@ -101,14 +117,20 @@ namespace scramblerVerify
             return result;
         }
 
-        public static void save(string location,string input,string[] uuidGen)
+        public static void save(string location,string input,string[] uuidGen,bool keepEverything)
         {
-            string[] everything = load(location);
             int i;
+            string[] everything = { };
+            if (keepEverything)
+                everything = load(location);
+
             StreamWriter saveLocation = new StreamWriter(location);
-            for(i = 0; i < everything.Length; i++)
+            if (keepEverything)
             {
-                saveLocation.WriteLine(everything[i]);
+                for (i = 0; i < everything.Length; i++)
+                {
+                    saveLocation.WriteLine(everything[i]);
+                }
             }
 
             //Insert all input:
@@ -117,6 +139,34 @@ namespace scramblerVerify
                 saveLocation.WriteLine(enDecrypt(true, input,uuidGen[i]));
             }
             saveLocation.Close();
+        }
+
+        public static void remove(string location,string input,string[] uuidGen)
+        {
+            string[] everything = load(location);
+
+            List<string> newList = new List<string>();
+            //remake the list with the requested strings ommited:
+            int j = 0;
+            for (int i = 0; i < everything.Length; i++)
+            {
+                bool copy = false;
+                for(j = 0; j < uuidGen.Length; j++)
+                {
+                    //Console.WriteLine(uuidGen[j]+":"+enDecrypt(true, input, uuidGen[j])+" | save entry:"+everything[i]);
+                    if(enDecrypt(true,input,uuidGen[j]) == everything[i])
+                    {
+                        copy = true;
+                        break;
+                    }
+                }
+                if (!copy)
+                {
+                    newList.Add(everything[i]);
+                }
+            }
+            //After sifting through all options, re-save:
+            save(location, input, newList.ToArray(),false);
         }
 
         public static string[] load(string location)

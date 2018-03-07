@@ -2,7 +2,6 @@
   -- Date last modified: 2/2/2018
   -- Dependices: Stylesheet = "desktop.css"
   -->
-  
 <?php
     session_start();
 	include("phpFunctions.php");
@@ -29,7 +28,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
     </head>
     <body>
-        
+
         <nav class="navbar navbar-default navbar-fixed-top">
           <div class="container-fluid">
             <div class="navbar-header">
@@ -43,16 +42,16 @@
                         <option>lbates@pstcc.edu</option>
                     </select>
                 </li>
-                
-                <li><button data-toggle="modal" data-target="#Add_Modal" class="btn btn-block" style="color: white; background-color: #FCD955" >Add Item</button></li>
-                <li class="active"><button class="btn btn-success btn-block" onclick="submitFinal()">Submit Transfer</button></li>
+
+                <li><button data-toggle="modal" data-target="#Add_Modal" class="btn btn-block" id="addBtn">Add Item</button></li>
+                <li><button class="btn btn-success btn-block" onclick="submitFinal()">Submit Transfer</button></li>
                 <li><button class="btn btn-danger btn-block" onclick="window.location.href='logout.php'">Logout</button></li>
             </ul>
           </div>
         </nav>
-        
+
         <div class="content-main container-fluid">
-                
+
             <table class="table table-condensed table-striped">
                 <thead>
                     <th>PSCC ID</th>
@@ -66,13 +65,13 @@
                     <th>Notes</th>
                     <th></th>
                 </thead>
-                <tbody class="content-area">            
-                    
+                <tbody class="content-area">
+
                 </tbody>
-            </table>    
+            </table>
         </div>
-        
-        
+
+
         <!-- Add Modal start -->
         <div id="Add_Modal" class="modal fade" role="dialog">
           <div class="modal-dialog">
@@ -84,7 +83,7 @@
                 <h4 class="modal-title">Transfer Details</h4>
               </div>
               <div class="modal-body container-fluid">
-                  
+
                 <div class="col-sm-6">
                     <div class="form-group" style="text-align: left; margin: 0 auto;">
                         <h4>PSCC ID#</h4>
@@ -98,10 +97,10 @@
 						<?php
 							$query= "SELECT DISTINCT Location FROM [Complete Active inventory list 52914];";
 							$options = queryDB($con1, $query);
-							
-							foreach($options as $row) 
+
+							foreach($options as $row)
 							{
-								foreach($row as $value) 
+								foreach($row as $value)
 								{
 									echo "<option>" . $value . "</option>";
 								}
@@ -110,7 +109,7 @@
 					   </select>
                     </div>
                 </div>
-                  
+
                 <div class="col-sm-6">
                     <div class="form-group" style="text-align: left; margin: 0 auto;">
                         <h4>New Owner</h4>
@@ -119,17 +118,17 @@
 						<?php
 							$query= "SELECT DISTINCT [NAME] FROM dbo_tblCustodians;";
 							$options = queryDB($con1, $query);
-							
-							foreach($options as $row) 
+
+							foreach($options as $row)
 							{
-								foreach($row as $value) 
+								foreach($row as $value)
 								{
 									echo "<option>" . $value . "</option>";
 								}
 							}
 						?>
                         </select>
-                    </div>   
+                    </div>
 
                     <div class="form-group" style="text-align: left; margin: 0 auto;">
                         <h4>New Department</h4>
@@ -139,9 +138,9 @@
                                 $query= "SELECT DISTINCT DeptTo FROM tblTransTemp_072017;";
                                 $options = queryDB($con1, $query);
 
-                                foreach($options as $row) 
+                                foreach($options as $row)
                                 {
-                                    foreach($row as $value) 
+                                    foreach($row as $value)
                                     {
                                         echo "<option>" . $value . "</option>";
                                     }
@@ -150,15 +149,15 @@
                         </select>
                     </div>
                   </div>
-                
+
                 <div class="col-sm-12">
                     <div class="form-group">
                         <h4>Notes</h4>
                         <textarea maxlength="255" class="form-control" name="notes" id="notes"></textarea>
                     </div>
-                </div>    
-                    
-                <div class="col-sm-6">  
+                </div>
+
+                <div class="col-sm-6">
                     <div class="form-group" style="text-align: left; margin: 0 auto;">
                         <h4>Model</h4>
                         <input class="form-control" id="model" name="model" readonly>
@@ -168,8 +167,8 @@
                         <input class="form-control" id="pre_room" name="pre_room" readonly>
                     </div>
                 </div>
-                    
-                <div class="col-sm-6">  
+
+                <div class="col-sm-6">
                     <div class="form-group" style="text-align: left; margin: 0 auto;">
                         <h4>Previous Owner</h4>
                         <input class="form-control" id="pre_owner" name="pre_owner" readonly>
@@ -178,11 +177,11 @@
                         <h4>Previous Department</h4>
                         <input class="form-control" id="pre_dept" name="pre_dept" readonly>
                     </div>
-                </div>    
-                
+                </div>
+
               </div>
-              <!-- Add Modal content end -->  
-                  
+              <!-- Add Modal content end -->
+
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-success" onclick="submit();">Save Changes</button>
@@ -192,7 +191,7 @@
           </div>
         </div>
         <!-- Add Modal end -->
-        
+
         <script src="manipulate_transfers.js"></script>
     </body>
 </html>

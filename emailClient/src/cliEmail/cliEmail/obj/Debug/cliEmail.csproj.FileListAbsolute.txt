@@ -1,0 +1,7 @@
+C:\Users\Zacha\Documents\Code\csharp\commandLine\cliEmail\cliEmail\obj\Debug\cliEmail.csprojResolveAssemblyReference.cache
+C:\Users\Zacha\Documents\Code\csharp\commandLine\cliEmail\cliEmail\obj\Debug\cliEmail.csproj.CoreCompileInputs.cache
+C:\Users\Zacha\Documents\Code\csharp\commandLine\cliEmail\cliEmail\bin\Debug\cliEmail.exe.config
+C:\Users\Zacha\Documents\Code\csharp\commandLine\cliEmail\cliEmail\bin\Debug\cliEmail.exe
+C:\Users\Zacha\Documents\Code\csharp\commandLine\cliEmail\cliEmail\bin\Debug\cliEmail.pdb
+C:\Users\Zacha\Documents\Code\csharp\commandLine\cliEmail\cliEmail\obj\Debug\cliEmail.exe
+C:\Users\Zacha\Documents\Code\csharp\commandLine\cliEmail\cliEmail\obj\Debug\cliEmail.pdb
