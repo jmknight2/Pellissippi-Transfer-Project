@@ -205,7 +205,7 @@ function submitEdit()
               var isDuplicate = false;
                 
                 transfersArray.forEach(function(element, index){
-                    if($('#IDAdd').val() === element.itemID)
+                    if($('#IDAdd').val().toUpperCase() === element.itemID.toUpperCase())
                     {
                         isDuplicate = true;
                     }
@@ -272,7 +272,7 @@ function submitNew()
                 var isDuplicate = false;
                 
                 transfersArray.forEach(function(element, index){
-                    if($('#IDAdd').val() === element.itemID)
+                    if($('#IDAdd').val().toUpperCase() === element.itemID.toUpperCase())
                     {
                         isDuplicate = true;
                     }
