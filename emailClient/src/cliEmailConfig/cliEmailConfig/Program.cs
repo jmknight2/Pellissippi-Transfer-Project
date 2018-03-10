@@ -12,15 +12,12 @@ namespace cliEmailConfig
         //This is a double layer to make sure only this, and the email client can open the config.
         private static string uuid = key.getKey();
         //Depending on the process, this may contain either an opened config, or a config being saved.
-        public static List<string> configFile = new List<string>();
+        public static string configFile = "";
         public static List<string[]> contacts = new List<string[]>();
         public static int selectedContact = 0;
         public static string password = "";
         public static bool changedPassword = false;
         public static string currPath = ""; //The location of the file currently being edited.
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
@@ -33,14 +30,17 @@ namespace cliEmailConfig
         {
             try
             {
-                StreamReader config = File.OpenText(path);
+                StreamReader newFile = File.OpenText(path);
+                string temp = newFile.ReadToEnd();
+                string[] config = mailEncrypt(false,uuid,temp).Split('\n');
+                //MessageBox.Show(mailEncrypt(false, uuid, temp));
+                newFile.Close();
                 //Skip over the first line, which contains the uuid:
-                config.ReadLine();
-                string temp = ""; //This is where this program decrypts the first half.
-                while (!config.EndOfStream)
+                int i;
+                configFile = "";
+                for (i = 1; i < config.Length; i++)
                 {
-                    temp = mailEncrypt(false,uuid, config.ReadLine());
-                    configFile.Add(temp);
+                    configFile+=config[i]+(i == config.Length-1?"":"\n");
                 }
                 return true;
             }
@@ -50,15 +50,13 @@ namespace cliEmailConfig
             }
         }
 
-        public static bool save(string path)
+        public static bool save(string path,string passUuid)
         {
             try
             {
                 StreamWriter config = new StreamWriter(path);
-                for (int i=0;i< configFile.Count;i++)
-                {
-                    config.WriteLine(mailEncrypt(true,uuid,configFile[i]));
-                }
+                //MessageBox.Show(passUuid + "\n" + configFile);
+                config.Write(mailEncrypt(true,uuid,passUuid+"\n"+configFile));
                 config.Close();
                 return true;
             }
@@ -72,7 +70,7 @@ namespace cliEmailConfig
         {
             if (enDecrypt)
             {
-                input = Encrypt.fluctuate(true, uuid, input);
+                input = Encrypt.fluctuate(true, uuid, input,true);
                 input = Encrypt.scrambler(true, uuid, input);
                 input = Encrypt.fluctuate(true, Encrypt.reverse(uuid), input);
                 input = Encrypt.reverse(input);

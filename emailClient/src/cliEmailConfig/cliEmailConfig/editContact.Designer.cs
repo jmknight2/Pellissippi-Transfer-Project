@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(editContact));
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.mailTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -37,42 +38,47 @@
             // 
             // nameTextBox
             // 
-            this.nameTextBox.Location = new System.Drawing.Point(129, 40);
+            this.nameTextBox.Location = new System.Drawing.Point(86, 26);
+            this.nameTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(214, 26);
+            this.nameTextBox.Size = new System.Drawing.Size(144, 20);
             this.nameTextBox.TabIndex = 0;
             // 
             // mailTextBox
             // 
-            this.mailTextBox.Location = new System.Drawing.Point(129, 72);
+            this.mailTextBox.Location = new System.Drawing.Point(86, 47);
+            this.mailTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.mailTextBox.Name = "mailTextBox";
-            this.mailTextBox.Size = new System.Drawing.Size(214, 26);
+            this.mailTextBox.Size = new System.Drawing.Size(144, 20);
             this.mailTextBox.TabIndex = 1;
             this.mailTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.mailTextBox_KeyDown);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(51, 46);
+            this.label1.Location = new System.Drawing.Point(34, 30);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(51, 20);
+            this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Name";
             // 
             // emailLabel
             // 
             this.emailLabel.AutoSize = true;
-            this.emailLabel.Location = new System.Drawing.Point(51, 78);
+            this.emailLabel.Location = new System.Drawing.Point(34, 51);
+            this.emailLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.emailLabel.Name = "emailLabel";
-            this.emailLabel.Size = new System.Drawing.Size(48, 20);
+            this.emailLabel.Size = new System.Drawing.Size(32, 13);
             this.emailLabel.TabIndex = 3;
             this.emailLabel.Text = "Email";
             // 
             // doneButton
             // 
-            this.doneButton.Location = new System.Drawing.Point(193, 111);
+            this.doneButton.Location = new System.Drawing.Point(129, 72);
+            this.doneButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.doneButton.Name = "doneButton";
-            this.doneButton.Size = new System.Drawing.Size(75, 29);
+            this.doneButton.Size = new System.Drawing.Size(50, 19);
             this.doneButton.TabIndex = 4;
             this.doneButton.Text = "Done";
             this.doneButton.UseVisualStyleBackColor = true;
@@ -80,14 +86,16 @@
             // 
             // editContact
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(468, 152);
+            this.ClientSize = new System.Drawing.Size(312, 99);
             this.Controls.Add(this.doneButton);
             this.Controls.Add(this.emailLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.mailTextBox);
             this.Controls.Add(this.nameTextBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "editContact";
             this.Text = "Edit Contact";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.editContact_FormClosed);

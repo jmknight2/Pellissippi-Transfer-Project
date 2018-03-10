@@ -66,15 +66,16 @@ namespace cliEmail
         {
             //hard coding the required values to send an email off:
             to = new List<MailAddress>();
-            from = new MailAddress(input[3], input[2]);
-            sendingEmail = input[4];
-            sendingPass = input[5];
-            smtpServer = input[6];
-            smtpPort = Convert.ToInt32(input[7]);
+            from = new MailAddress(input[2], input[1]);
+
+            sendingEmail = input[3];
+            sendingPass = input[4];
+            smtpServer = input[5];
+            smtpPort = Convert.ToInt32(input[6]);
 
             //Grabbing the recipients:
             string[] curr;
-            for (int i = 8; i < input.Count; i++)
+            for (int i = 7; i < input.Count; i++)
             {
                 curr = input[i].Split(',');
                 to.Add(new MailAddress(curr[1], curr[0]));

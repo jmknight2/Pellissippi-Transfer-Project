@@ -36,28 +36,34 @@ namespace cliEmailConfig
             everythingEnabled = !everythingEnabled;
         }
 
+        private void resetVals()
+        {
+            configPassBox.Text = "";
+            connectionPassBox.Text = "";
+            senderNameTextBox.Text = "";
+            senderTextBox.Text = "";
+            accountEmailBox.Text="";
+            smtpBox.Text = "";
+            portBox.Text = "";
+            Program.contacts.Clear();
+            emailListBox.Items.Clear();
+        }
+
         //This is the initial setup for saving the file; after this is finished, it calls "program.save()"
         private void saveSetup(string path)
         {
             //The uuid that decodes the file when run by the actual client (This program ignores it):
             string uuid = Uuid.generate(new Random(Uuid.txt2PsudoRandom(Program.password)), true);
-            Program.configFile.Clear();
-
-            Program.configFile.Add(uuid);
-            Program.configFile.Add(Program.mailEncrypt(true, uuid, "testing123"));
-            Program.configFile.Add(Program.mailEncrypt(true, uuid, senderNameTextBox.Text));
-            Program.configFile.Add(Program.mailEncrypt(true, uuid, senderTextBox.Text));
-            Program.configFile.Add(Program.mailEncrypt(true, uuid, accountEmailBox.Text));
-            Program.configFile.Add(Program.mailEncrypt(true, uuid, connectionPassBox.Text));
-            Program.configFile.Add(Program.mailEncrypt(true, uuid, smtpBox.Text));
-            Program.configFile.Add(Program.mailEncrypt(true, uuid, portBox.Text));
-
+            string everything = "testing123\n"+senderNameTextBox.Text+'\n'+senderTextBox.Text+'\n'+accountEmailBox.Text+'\n'+connectionPassBox.Text+'\n'+smtpBox.Text+'\n'+portBox.Text+'\n';
+            
             //Encrypting emails:
-            foreach (string[] currContact in Program.contacts)
+            for(int i=0;i<Program.contacts.Count();i++)
             {
-                Program.configFile.Add(Program.mailEncrypt(true, uuid, currContact[0]+","+currContact[1]));
+                everything+=Program.contacts[i][0]+','+Program.contacts[i][1]+(i == Program.contacts.Count()-1?"":"\n");
             }
-            if (!Program.save(path))
+            //Encrypting everything and saving to configFile:
+            Program.configFile=Program.mailEncrypt(true,uuid,everything);
+            if (!Program.save(path,uuid))
             {
                 MessageBox.Show("There was an error attempting to save this file... please try again with a different path and/or name","Save error!",MessageBoxButtons.OK,MessageBoxIcon.Error);
             }
@@ -68,21 +74,22 @@ namespace cliEmailConfig
             if (e.KeyCode == Keys.Enter && configPassBox.Text != "")
             {
                 string uuid = Uuid.generate(new Random(Uuid.txt2PsudoRandom(configPassBox.Text)),true);
-                string test = Program.mailEncrypt(false,uuid,Program.configFile[0]);
-                if (test == "testing123" )
+                string[] everything = Program.mailEncrypt(false,uuid,Program.configFile).Split('\n');
+
+                if (everything[0] == "testing123" )
                 {
                     //Proceed to decrypting the rest of the information:
-                    senderNameTextBox.Text = Program.mailEncrypt(false, uuid, Program.configFile[1]);
-                    senderTextBox.Text = Program.mailEncrypt(false, uuid, Program.configFile[2]);
-                    accountEmailBox.Text = Program.mailEncrypt(false, uuid, Program.configFile[3]);
-                    connectionPassBox.Text = Program.mailEncrypt(false, uuid, Program.configFile[4]);
-                    smtpBox.Text = Program.mailEncrypt(false, uuid, Program.configFile[5]);
-                    portBox.Text = Program.mailEncrypt(false, uuid, Program.configFile[6]);
+                    senderNameTextBox.Text  = everything[1];
+                    senderTextBox.Text = everything[2];
+                    accountEmailBox.Text = everything[3];
+                    connectionPassBox.Text = everything[4];
+                    smtpBox.Text = everything[5];
+                    portBox.Text = everything[6];
                     //Grab all contacts:
                     emailListBox.Items.Clear();
-                    for (int i = 7; i < Program.configFile.Count; i++)
+                    for (int i = 7; i < everything.Length; i++)
                     {
-                        string[] temp = Program.mailEncrypt(false, uuid, Program.configFile[i]).Split(',');
+                        string[] temp = everything[i].Split(',');
                         Program.contacts.Add(temp);
                         emailListBox.Items.Add(Program.contacts[Program.contacts.Count - 1][0]);
                     }
@@ -118,6 +125,7 @@ namespace cliEmailConfig
 
         private void editContactButton_Click(object sender, EventArgs e)
         {
+            Program.selectedContact = emailListBox.SelectedIndex;
             new editContact().Show();
         }
 
@@ -125,6 +133,7 @@ namespace cliEmailConfig
         {
             Program.changedPassword = false;
             new changePassword().Show();
+            resetVals();
         }
 
         private void startPage_EnabledChanged(object sender, EventArgs e)
@@ -160,6 +169,7 @@ namespace cliEmailConfig
             Program.load(Program.currPath);
             if(everythingEnabled)
                 enableDisableEverything();
+            resetVals();
         }
 
         private void newContactButton_Click(object sender, EventArgs e)

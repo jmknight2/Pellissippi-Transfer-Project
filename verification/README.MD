@@ -33,3 +33,10 @@ Passwords do **not** get stored in this program, just scrambled text that can be
 **-r** represents *remove*. Use this to remove the requested password reference.
 
 You can remove multiple references to passcodes at once (as represented by password1,etc.)
+
+### Changing a "passowrd"
+If you would like to replace a "password" with another, do so with the following command;
+```/.scramblerVerify.exe -p oldPass newPass -f ./path/to/textFile.txt```
+
+**WHERE**
+**-p** stands for *rePlace*. This flag tells the program that the first word is the second's replacement, and saves accordingly. If The first word doesn't exhist, the program outputs "notfound".

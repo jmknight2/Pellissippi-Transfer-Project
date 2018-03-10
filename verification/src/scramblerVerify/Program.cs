@@ -23,6 +23,7 @@ namespace scramblerVerify
             bool encrypt = false;
             bool useFile = false;
             bool removeWord = false;
+            bool replaceWord = false;
             string saveLocation = "";
 
             bool gotFirstWord = false;
@@ -50,6 +51,9 @@ namespace scramblerVerify
                     case "-r":
                         removeWord = true;
                         break;
+                    case "-p":
+                        replaceWord = true;
+                        break;
                     default:
                         if (args[i] != saveLocation)
                         {
@@ -69,6 +73,17 @@ namespace scramblerVerify
                 wordList.Add(compare);
                 remove(saveLocation,test,wordList.ToArray());
             }
+            else if (replaceWord)
+            {
+                string[] fileList = load(saveLocation);
+                //We only compare two different words: with the second word being the exhisting word we wish to replace with the first.
+                string[] newList = replace(wordList[0], compare, fileList, test);
+                if (newList == null)
+                {
+                    Console.WriteLine("notfound");
+                }
+                else save(saveLocation, test, newList, false,false);
+            }
             else if (encrypt)
             {
                 wordList.Add(compare);
@@ -81,7 +96,7 @@ namespace scramblerVerify
                 {
                     foreach(string word in wordList)
                     {
-                        Console.WriteLine(enDecrypt(true,test,word));
+                        Console.WriteLine(enDecrypt(true,test,word,false));
                     }
                 }
             }
@@ -98,46 +113,46 @@ namespace scramblerVerify
 
         }
 
-        public static string enDecrypt(bool encrypt, string input,string uuidGen)
+        public static string enDecrypt(bool encrypt, string input, string uuidGen, bool useEnter = true)
         {
             string uuid = Uuid.generate(new Random(Uuid.txt2PsudoRandom(uuidGen)),true);
             string result = input;
             if (encrypt)
             {
                 result = Encrypt.scrambler(true, uuid, result);
-                result = Encrypt.fluctuate(true, uuid, result);
+                result = Encrypt.fluctuate(true, uuid, result, useEnter);
                 result = Encrypt.reverse(result);
             }
             else
             {
                 result = Encrypt.reverse(result);
-                result = Encrypt.fluctuate(false, uuid, result);
+                result = Encrypt.fluctuate(false, uuid, result, useEnter);
                 result = Encrypt.scrambler(false, uuid, result);
             }
             return result;
         }
 
-        public static void save(string location,string input,string[] uuidGen,bool keepEverything)
+        public static void save(string location, string input, string[] uuidGen, bool keepEverything, bool encryptEachline = true)
         {
             int i;
-            string[] everything = { };
+            List<string> everything = new List<string>();
             if (keepEverything)
-                everything = load(location);
-
+                everything.AddRange(load(location));
+            //Console.WriteLine(""+everything.Count());
             StreamWriter saveLocation = new StreamWriter(location);
-            if (keepEverything)
-            {
-                for (i = 0; i < everything.Length; i++)
-                {
-                    saveLocation.WriteLine(everything[i]);
-                }
-            }
 
             //Insert all input:
             for (i = 0; i < uuidGen.Length; i++)
             {
-                saveLocation.WriteLine(enDecrypt(true, input,uuidGen[i]));
+                everything.Add(encryptEachline? enDecrypt(true, input,uuidGen[i],false) : uuidGen[i] );
             }
+            //Gather it all together, and encrypt it once more for good measure:
+            string output = "";
+            for (i = 0; i < everything.Count(); i++)
+            {
+                output += everything[i] + (i == everything.Count() - 1 ? "" : "\n");
+            }
+            saveLocation.Write(enDecrypt(true, output, Uuid.generate(new Random(Uuid.txt2PsudoRandom(test)), true)));
             saveLocation.Close();
         }
 
@@ -171,30 +186,45 @@ namespace scramblerVerify
 
         public static string[] load(string location)
         {
-            List<string> result = new List<string>();
+            string result = "";
             try
             {
                 StreamReader reader = File.OpenText(location);
-                while (!reader.EndOfStream)
-                {
-                    result.Add(reader.ReadLine());
-                }
+                result = enDecrypt(false,reader.ReadToEnd(),Uuid.generate(new Random(Uuid.txt2PsudoRandom(test)),true));
                 reader.Close();
+                //Console.WriteLine(result);
             }
             catch (FileNotFoundException ex)
             {
+                return new string[] { };
             }
-            return result.ToArray();
+            return result.Split('\n');
         }
 
         public static bool search(string needle, string[] haystack,string uuidGen)
         {
-            foreach(string element in haystack)
+            //Console.WriteLine("serch term: " + enDecrypt(true, needle, uuidGen, false)+"\n");
+            foreach (string element in haystack)
             {
-                if (enDecrypt(false,element,uuidGen) == needle)
+                //Console.WriteLine(element);
+                if (enDecrypt(true, needle, uuidGen,false) == element)
                     return true;
             }
             return false;
+        }
+        public static string[] replace(string replaceString, string searchWord,string[] wordList, string baseWord)
+        {
+            for(int i = 0; i < wordList.Length; i++)
+            {
+                if(enDecrypt(true,baseWord,searchWord,false) == wordList[i])
+                {
+                    //Console.WriteLine("before:" + wordList[i]);
+                    wordList[i] = enDecrypt(true, baseWord,replaceString,false);
+                    //Console.WriteLine("after:" + wordList[i]);
+                    return wordList;
+                }
+            }
+            return null;
         }
     }
 }

@@ -10,7 +10,7 @@ using System.IO;
 /// Encryption: Zachary Mitchell
 /// File Author: Zachary Mitchell
 /// 
-/// This makes use of the SMTP class to send emails to the desired client, and from the receiver.
+/// This makes use of the SMTP class to s emails to the desired client, and from the receiver.
 /// </summary>
 namespace cliEmail
 {
@@ -25,7 +25,7 @@ namespace cliEmail
         {
             "-config",
             "-html",
-            "-sfiles"
+            "-files"
         };
 
         private static bool searchArgs(string input)
@@ -92,16 +92,21 @@ namespace cliEmail
         {
             List<string> conf = new List<string>();
             StreamReader confIn = File.OpenText(path);
-            while (!confIn.EndOfStream)
-            {
-                conf.Add(mailEncrypt(uuid, confIn.ReadLine()));
-            }
-            //decrytping based off user-defined uuid:
-            for (int i = 1; i < conf.Count(); i++)
-            {
-                conf[i] = mailEncrypt(conf[0], conf[i]);
-            }
+            string confStr = confIn.ReadToEnd();
             confIn.Close();
+            //Decrypt the string based off of key.cs:
+            conf.AddRange(mailEncrypt(uuid,confStr).Split('\n'));
+
+            confStr = "";
+            //Decrypt the string based off of user-password: (we sortof have to put the string back together :P)
+            for(int i = 1; i < conf.Count(); i++)
+            {
+                confStr += conf[i] + (i == conf.Count() - 1 ?"":"\n");
+            }
+            string pass = conf[0];
+            conf.Clear();
+            //now we split the string AGAIN! (oi, that must be painful) >_<
+            conf.AddRange(mailEncrypt(pass,confStr).Split('\n'));
             return conf;
         }
 

@@ -31,7 +31,7 @@ function bgGo(inputTag){
         src: URL.createObjectURL(document.getElementById("ScannerJS").files[0])
   }, function(data) {
       if (data) {
-          inputTag.value=data.codeResult.code;
+          inputTag.value=data.codeResult.code.split(' ');
           return
       }
       else

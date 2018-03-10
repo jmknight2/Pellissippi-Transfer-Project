@@ -6,7 +6,7 @@
 using System;
 static class Encrypt
 {
-	public static string fluctuate(bool enDecrypt, string uuid, string text)
+    public static string fluctuate(bool enDecrypt, string uuid, string text, bool useReturn = true)
     {
         string result="";
         string checkpoint = text; //This is here so text doesn't get replaced
@@ -23,7 +23,7 @@ static class Encrypt
         for (i = 0; i < longestString.Length; i++)
         {
             //Reset !longestString if it hits the max:
-            if((longestString == uuid && result.Length == text.Length) || longestString == text && curr == uuid.Length - 1)
+            if((longestString == uuid && result.Length == text.Length) || longestString == text && curr == uuid.Length)
             {
                 curr = 0;
                 if ((longestString == uuid && result.Length == text.Length))
@@ -48,7 +48,7 @@ static class Encrypt
             if (!enDecrypt)
                 addSubtract = !addSubtract;
 
-            result += charCalc((checkpoint[checkNum]), uuid[uuidNum], addSubtract );
+            result += charCalc((checkpoint[checkNum]), uuid[uuidNum], addSubtract,useReturn);
             //Console.WriteLine(text[result.Length-1] + ":" + result[result.Length-1] + "(["+((addSubtract?"+" : "-")) +"]"+(int)result[result.Length-1]+") uuid:"+uuid[uuidNum]);
 
             curr++;
@@ -113,8 +113,8 @@ static class Encrypt
             //Console.WriteLine(longestString == uuid);
             uuidPos = (longestString == uuid ? i : curr);
             textPos = (longestString == text ? i : curr);
-            swapPoint = new Random(hex2Int(uuid[uuidPos])).Next() % (textEdit.Length-1);
-           //Console.WriteLine("swapPoint: " + swapPoint);
+            swapPoint = new Random(hex2Int(uuid[uuidPos])).Next() % (textEdit.Length);
+            //Console.WriteLine("swapPoint: " + swapPoint);
 
 
             //Accomodating for this weird for loop that was just made (XP):
@@ -153,7 +153,7 @@ static class Encrypt
 
     //This is designed to keep text within the boundries that windows can handle, as well as keeping usable characters within the english language.
     //It is a far cry of the original, primitive method, which just did math on a specific set of characters.
-    private static string charCalc(char main, char hex, bool addSub)
+    private static string charCalc(char main, char hex, bool addSub,bool useReturn)
     {
         //Console.WriteLine("==charCalc()==");
         //hex won't be directly added; instead, we want it's hex value to be added to main.
@@ -162,14 +162,31 @@ static class Encrypt
         char result=main;
 
         int curr = -1;
-        char[][] charList =
+        char[][] charList;
+        if (useReturn)
         {
-            //new char[] {'\t','\t'},
+            charList = new char[][]
+            {
+            new char[] {'\n','\n'},
+            new char[] {'\r','\r'}, //this is called the carrige return. It was designed a long time ago as a way to communicate to hardware and software "HEY YOU! RENDER A NEW LINE!" Since some programs still use this, It's supported here.
+            new char[] {'\t','\t'},
             new char[]{' ','~'},
             new char[]{'¡','£'},
             new char[]{ '¿', '¿' },
             new char[]{ '÷', '÷' }
-        };
+            };
+        }
+        else
+        {
+            charList = new char[][]
+            {
+            new char[] {'\t','\t'},
+            new char[]{' ','~'},
+            new char[]{'¡','£'},
+            new char[]{ '¿', '¿' },
+            new char[]{ '÷', '÷' }
+            };
+        }
 
         int i = 0;
         //Let's discover the current location of main:
@@ -187,7 +204,7 @@ static class Encrypt
                 result = '?';
                 curr = 0;
             }
-        //Console.WriteLine("curr:" + curr + " | addSub: "+addSub + " | value: "+(int)addNumber + " | Char-to-edit: "+main);
+        //Console.WriteLine("curr:" + curr + " | addSub: "+addSub + " | value: "+(int)addNumber + " | Char-to-edit: '"+main+"' ("+(int)main+")");
         if (addSub)
         {
             for (i = 0; i < addNumber; i++)

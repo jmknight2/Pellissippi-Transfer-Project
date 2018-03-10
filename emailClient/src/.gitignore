@@ -1,2 +1,6 @@
 #These files are blocked from going into git due to their sensitivity:
 */*/key.cs
+#These files are just plain annoying:
+*/.vs
+*/*/obj
+*/*/bin
