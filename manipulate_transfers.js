@@ -109,7 +109,7 @@ function refreshListMobile()
 
 function deleteTransfer(button)
 {
-    if(confirm('Permanently delete this transfer?'))
+    if(confirm('Are you sure you want to delete this transfer?'))
     {
         if(filename === "desktop.php")
         {
@@ -202,27 +202,43 @@ function submitEdit()
       {
           if($('#newRoom').val() != null && $('#newOwner').val() != null && $('#newDept').val() != null)
           {
-                transfersArray[selectedTransferID].itemID = $('#IDAdd').val();
-                transfersArray[selectedTransferID].newRoom = $('#newRoom').val();
-                transfersArray[selectedTransferID].newOwner = $('#newOwner').val();
-                transfersArray[selectedTransferID].newDept = $('#newDept').val();
-                transfersArray[selectedTransferID].notes = $('#notes').val();
-                transfersArray[selectedTransferID].model = $('#model').val();
-                transfersArray[selectedTransferID].preRoom = $('#pre_room').val();
-                transfersArray[selectedTransferID].preOwner = $('#pre_owner').val();
-                transfersArray[selectedTransferID].preDept = $('#pre_dept').val();
-
-                if(filename === "desktop.php")
+              var isDuplicate = false;
+                
+                transfersArray.forEach(function(element, index){
+                    if($('#IDAdd').val().toUpperCase() === element.itemID.toUpperCase())
+                    {
+                        isDuplicate = true;
+                    }
+                });
+                
+                if(!isDuplicate)
                 {
-                    refreshListDesktop();
+                    transfersArray[selectedTransferID].itemID = $('#IDAdd').val();
+                    transfersArray[selectedTransferID].newRoom = $('#newRoom').val();
+                    transfersArray[selectedTransferID].newOwner = $('#newOwner').val();
+                    transfersArray[selectedTransferID].newDept = $('#newDept').val();
+                    transfersArray[selectedTransferID].notes = $('#notes').val();
+                    transfersArray[selectedTransferID].model = $('#model').val();
+                    transfersArray[selectedTransferID].preRoom = $('#pre_room').val();
+                    transfersArray[selectedTransferID].preOwner = $('#pre_owner').val();
+                    transfersArray[selectedTransferID].preDept = $('#pre_dept').val();
+
+                    if(filename === "desktop.php")
+                    {
+                        refreshListDesktop();
+                    }
+                    else
+                    {
+                        refreshListMobile();
+                    }
+
+                    $('#Add_Modal').modal('hide');
+                    selectedTransferID = undefined;
                 }
                 else
                 {
-                    refreshListMobile();
+                    alert("It appears this item is already being transfered");
                 }
-
-                $('#Add_Modal').modal('hide');
-                selectedTransferID = undefined;
           }
           else
           {
@@ -251,35 +267,50 @@ function submitNew()
     {
         if($('#model').val() != '' && $('#pre_room').val() != '' && $('#pre_owner').val() != '' && $('#pre_dept').val() != '')
         {
-
             if($('#newRoom').val() != null && $('#newOwner').val() != null && $('#newDept').val() != null)
             {
-                var transfer = {
-                    itemID:$('#IDAdd').val(),
-                    newRoom:$('#newRoom').val(),
-                    newOwner:$('#newOwner').val(),
-                    newDept:$('#newDept').val(),
-                    notes:$('#notes').val(),
-                    model:$('#model').val(),
-                    preRoom:$('#pre_room').val(),
-                    preOwner:$('#pre_owner').val(),
-                    preDept:$('#pre_dept').val(),
-                    custodian:undefined
-                };
-
-                transfersArray.push(transfer);
+                var isDuplicate = false;
                 
-                if(filename === "desktop.php")
+                transfersArray.forEach(function(element, index){
+                    if($('#IDAdd').val().toUpperCase() === element.itemID.toUpperCase())
+                    {
+                        isDuplicate = true;
+                    }
+                });
+                
+                if(!isDuplicate)
                 {
-                    refreshListDesktop();
+                    var transfer = {
+                        itemID:$('#IDAdd').val(),
+                        newRoom:$('#newRoom').val(),
+                        newOwner:$('#newOwner').val(),
+                        newDept:$('#newDept').val(),
+                        notes:$('#notes').val(),
+                        model:$('#model').val(),
+                        preRoom:$('#pre_room').val(),
+                        preOwner:$('#pre_owner').val(),
+                        preDept:$('#pre_dept').val(),
+                        custodian:undefined
+                    };
+
+                    transfersArray.push(transfer);
+
+                    if(filename === "desktop.php")
+                    {
+                        refreshListDesktop();
+                    }
+                    else
+                    {
+                        refreshListMobile();
+                    }
+
+
+                    $('#Add_Modal').modal('hide');
                 }
                 else
                 {
-                    refreshListMobile();
+                    alert("It appears this item is already being transfered");
                 }
-                    
-
-                $('#Add_Modal').modal('hide');
             }
             else
             {
@@ -337,7 +368,6 @@ function getInfoFromTag(str)
 		$("#pre_room").value = "";
 		$("#pre_owner").value = "";
 		$("#pre_dept").value = "";
-		return;
 	}
 
 	else
