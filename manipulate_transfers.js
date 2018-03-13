@@ -15,6 +15,10 @@ var selectedTransferID;
 var url = window.location.pathname;
 var filename = url.substring(url.lastIndexOf('/')+1);
 
+window.onbeforeunload = function(e) {
+    return 'Dialog text here.';
+};
+
 function refreshListDesktop()
 {
   $('.content-area tr').remove();
@@ -205,7 +209,7 @@ function submitEdit()
               var isDuplicate = false;
                 
                 transfersArray.forEach(function(element, index){
-                    if($('#IDAdd').val().toUpperCase() === element.itemID.toUpperCase())
+                    if($('#IDAdd').val().toUpperCase() === element.itemID.toUpperCase() && index != selectedTransferID)
                     {
                         isDuplicate = true;
                     }
