@@ -5,13 +5,11 @@
  * Date: 3/1/2018
  * Time: 8:40 PM
  */
-//include 'db_connection.php';
-include 'phpFunctions.php';
-
-//DB Connection
-$dbCon=connectToDB();
+include 'db_connection.php';
+include 'email.php';
 
 //tblTransTemp
+
 $Tech = ''; //tech making the move
 $Date = ''; //date of transaction
 $Tag = ''; //Pellissippi Asset tag number
@@ -29,13 +27,14 @@ $InstanceID = ''; //??????
 $Submit = ''; //????????
 $Hold = ''; // YES or NO are the only answers allowed
 
+$GLOBALS['readyToSend'] = false;
+
 //JSON Parsing and SQL insert statement string creator.
    if (isset($_GET['json'])){
      $json=json_decode($_GET['json'], true);
      if ( is_array( $json )) {
-         $arraySize = count($json);
-         for ($i = 0; $i < $arraySize; $i++) {
-
+         foreach($json as $string) {
+             $i=0;
              $Tech = 'You are';
              //$Date = date(date_timestamp_get())      // figure out how to get data and time
              $Tag = $json[$i]['itemID'];
@@ -45,7 +44,7 @@ $Hold = ''; // YES or NO are the only answers allowed
              $DeptFrom = $json[$i]['preDept'];
              $To = $json[$i]['newRoom'];
              $New = $json[$i]['newOwner'];
-             $NewOwnerPnum = '';    //pnumLookUp($dbCon, $json[$i]['newOwner']);
+             $NewOwnerPnum = '';
              $DeptTo = $json[$i]['newDept'];
              $Notes = $json[$i]['notes'];
              $Instance = $i + 1;
@@ -53,43 +52,28 @@ $Hold = ''; // YES or NO are the only answers allowed
              $Submit = '';
              $Hold = 'Yes';
 
-             $sql =  "INSERT INTO tblTransTemp(Tech, Tag, Model, [From], Previous, DeptFrom, [To], New, NewOwnerPnum, DeptTo, Notes, Instance, InstanceID, Submit, Hold) VALUES ('".$Tech."', '".$Tag."','".$Model."','".$From."','".$Previous."','".$DeptFrom."','".$To."','".$New."','".$NewOwnerPnum."','".$DeptTo."','".$Notes."','".$Instance."','".$InstanceID."','".$Submit."',".$Hold.");";
+             $sql =  "INSERT INTO tblTransTemp(Tech, Tag, Model, [From], Previous, DeptFrom, [To], New, NewOwnerPnum, DeptTo, Notes, Instance, InstanceID, Submit, Hold) VALUES ('".$Tech."', '".$Tag."','".$Model."','".$From."','".$Previous."','".$DeptFrom."','".$To."','".$New."','".$NewOwnerPnum."','".$DeptTo."','".$Notes."','".$Instance."','".$InstanceID."','".$Submit."',".$Hold.")";
 
-             //echo $New . '    '.$NewOwnerPnum;
-
-             insertTransfers($dbCon, $sql);
+             if(insertTransfers($sql))
+                 $GLOBALS['readyToSend'] = true;
          }
      } else {
          echo "ERROR in the is_array if statement.";
      }
+     if($GLOBALS['readyToSend'])
+        sendEmail($_GET['json']);
    } else {
        echo "No transfers to add";
 }
 
-function insertTransfers($con, $insertString) {
-
-    //echo $insertString;
-    odbc_exec($con, $insertString);
-    if (odbc_error())
-    {
-        echo odbc_errormsg($con);
-    } else {
-        echo "Records added successfully";
-    }
-
-}
-
-function pnumLookUp($con, $newName) {
-
-       $pNumNew = "SELECT [ID] FROM dbo_tblCustodians where [NAME] = '".$newName."';";
-       $pNumAnsr = odbc_exec($con, $pNumNew);
-
-       /*for ($i = 1; $i <= 6; $i++) {
-
-       }*/
-       echo $pNumAnsr[0]['ID'];
-       //print_r( $pNumAnsr[1]);
-       return $pNumAnsr;
+function insertTransfers($uname) {
+    $con=connectToDB();
+    //$sql = "INSERT INTO dbo_tblCustodians(ID, NAME, FFBMAST_CUSTODIAN_PIDM) VALUES ('P1234567', '" . $uname ."', 12345)";
+    echo $uname;
+    //This will help us know if we can send an email:
+    if(odbc_exec($con,$uname))
+        return true;
+    else return false;
 }
 
 ?>
